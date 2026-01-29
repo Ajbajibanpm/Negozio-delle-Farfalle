@@ -1,0 +1,262 @@
+:root {
+    --verde-bosco: #2D4030;
+    --verde-salvia: #6B8E23;
+    --iuta: #D2B48C;
+    --crema: #FDFBF7;
+    --testo: #333;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--crema);
+    color: var(--testo);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Typography & Brand */
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    letter-spacing: 5px;
+    color: var(--verde-bosco);
+    margin: 0;
+}
+
+.brand-prefix {
+    font-style: italic;
+    color: var(--verde-salvia);
+    display: block;
+    margin-bottom: -10px;
+}
+
+/* Navigation */
+header {
+    background: white;
+    padding: 2rem;
+    border-bottom: 5px solid var(--iuta);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--verde-bosco);
+    font-weight: 600;
+    margin-left: 2rem;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: var(--verde-salvia);
+}
+
+/* Hero Section */
+.hero {
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.hero-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+}
+
+/* Grid Prodotti */
+.esperienze-prodotti {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--verde-bosco);
+    margin-bottom: 3rem;
+}
+
+.grid-prodotti {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    border: 1px solid #eee;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.tag {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--verde-salvia);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.card-body h3 {
+    margin: 0 0 15px 0;
+    color: var(--verde-bosco);
+}
+
+/* Footer & Logo */
+footer {
+    background: var(--verde-bosco);
+    color: var(--iuta);
+    padding: 1rem 1rem;
+    margin-top: rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    
+}
+
+.footer-logo {
+    text-align: center;
+}
+
+.footer-info {
+    text-align: center;
+}
+
+.symbol {
+    font-size: 2.5rem;
+    filter: sepia(1) saturate(2);
+}
+
+.footer-brand {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    letter-spacing: 8px;
+    border-top: 1px solid var(--iuta);
+    border-bottom: 1px solid var(--iuta);
+    margin: 10px 0;
+}
+
+.category {
+    color: var(--accento);}
+
+brand-inline {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-inline .prefix {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--verde-salvia);
+    margin-bottom: -5px;
+}
+
+.brand-inline .main-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--verde-bosco);
+}
+
+
+/*chi-siamo*/
+/* Layout per la pagina Chi Siamo */
+.content-wrapper {
+    padding-top: 100px; /* Spazio per la nav se fissa */
+    min-height: 80vh;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.story-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.story-text p {
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.story-image img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+blockquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    border-left: 3px solid #6b8e23; /* Un verde terra */
+    padding-left: 20px;
+    margin: 30px 0;
+    color: #555;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .story-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
