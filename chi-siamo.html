@@ -6,6 +6,74 @@
     <title>Chi Siamo | Il Negozio delle FARFALLE</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Integrazioni CSS specifiche per la struttura Chi Siamo */
+        .about-hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .story-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        .story-block.reverse {
+            direction: rtl;
+        }
+
+        .story-block.reverse .text-content {
+            direction: ltr;
+        }
+
+        .text-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .text-content p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 15px 15px 0px #f4f1ea;
+        }
+
+        @media (max-width: 768px) {
+            .story-block {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .image-wrapper img {
+                height: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -25,71 +93,41 @@
         </nav>
     </header>
 
-<main class="chi-siamo-page">
-        <section class="page-header">
-            <h1>Custodi di Tradizioni</h1>
-            <p class="subtitle">Nel cuore di Mel, dove il tempo segue il ritmo delle stagioni.</p>
-        </section>
+    <section class="about-hero">
+        <div class="hero-content">
+            <span class="tag" style="color: white; border-color: white;">LA NOSTRA STORIA</span>
+            <h2 style="font-size: 3.5rem;">Oltre il bancone, <br>dentro la terra.</h2>
+        </div>
+    </section>
 
-        <section class="manifesto-section container">
-            <div class="manifesto-grid">
-                <div class="manifesto-content">
-                    <span class="eyebrow">IL NOSTRO MANIFESTO</span>
-                    <h2>Non vendiamo prodotti, <br>curiamo legami.</h2>
-                    <p>Entrare nel <strong>Negozio delle FARFALLE</strong> non significa solo fare la spesa. Significa stringere la mano a chi ha potato i meli a Conzago, a chi ha atteso che il miele di castagno maturasse nei boschi di Bribano, a chi ha macinato a pietra il Mais Sponcio a Sospirolo.</p>
-                    <p>La nostra filosofia è radicata nella <strong>genuinità dell'imperfezione</strong>: preferiamo una mela renetta canuta con la buccia rugosa a una lucida da esposizione, perché sappiamo che il sapore vero non ha bisogno di filtri.</p>
-                </div>
-                <div class="manifesto-image">
-                    <img src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?auto=format&fit=crop&w=800&q=80" alt="Dettaglio natura bellunese">
-                </div>
+    <main class="about-content">
+        
+        <article class="story-block">
+            <div class="text-content">
+                <span class="tag">IDENTITÀ</span>
+                <h3>Scegliamo la rarità.</h3>
+                <p>Il Negozio delle Farfalle non è un supermercato di nicchia. È un avamposto di resistenza gastronomica a Mel.</p>
+                <p>Siamo nati con l'idea che il cibo debba raccontare la fatica di chi sale sui pendii della Valbelluna e la testardaggine di chi recupera semi antichi. Qui non troverete prodotti industriali "travestiti", ma solo eccellenze che hanno superato il filtro della nostra fiducia.</p>
             </div>
-        </section>
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=800&q=80" alt="Dettaglio prodotti locali">
+            </div>
+        </article>
 
-        <section class="visual-story">
-            <div class="grid-gallery">
-                <figure class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=600&q=80" alt="Mercato contadino">
-                    <figcaption>La scelta del campo</figcaption>
-                </figure>
-                <figure class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1595126731003-7355b108385c?auto=format&fit=crop&w=600&q=80" alt="Mani che lavorano">
-                    <figcaption>L'artigianalità del gesto</figcaption>
-                </figure>
-                <figure class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80" alt="Paesaggio Borgo Valbelluna">
-                    <figcaption>I nostri pendii</figcaption>
-                </figure>
+        <article class="story-block reverse">
+            <div class="text-content">
+                <span class="tag">IL NOME</span>
+                <h3>Perché le Farfalle?</h3>
+                <p>La farfalla è una creatura fragile ma essenziale. È la prima a sparire quando un ecosistema si ammala e la prima a tornare quando la natura ritrova il suo equilibrio.</p>
+                <p>Selezionare prodotti sani, coltivati senza chimica aggressiva e nel rispetto dei cicli stagionali, significa proteggere il volo delle farfalle e, con esse, la nostra salute e il futuro di Borgo Valbelluna.</p>
             </div>
-        </section>
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1470137237906-d8a4f71e1966?auto=format&fit=crop&w=800&q=80" alt="Natura e biodiversità">
+            </div>
+        </article>
 
-        <section class="values-detail container">
-            <div class="values-grid">
-                <div class="value-card">
-                    <span class="value-icon">⛰️</span>
-                    <h3>Territorio Resistente</h3>
-                    <p>Sosteniamo l'agricoltura eroica di montagna. Ogni vino, ogni formaggio, ogni confettura proviene da piccoli appezzamenti dove la macchina non può arrivare e l'uomo lavora ancora con dedizione assoluta.</p>
-                </div>
-                <div class="value-card">
-                    <span class="value-icon">⏳</span>
-                    <h3>Il Lusso della Lentezza</h3>
-                    <p>Rifiutiamo la logica del tutto e subito. Rispettiamo i tempi di stagionatura e le disponibilità naturali. Se un prodotto è finito, aspettiamo che la terra ce lo ridoni.</p>
-                </div>
-                <div class="value-card">
-                    <span class="value-icon">🤝</span>
-                    <h3>Trasparenza Totale</h3>
-                    <p>Conosciamo personalmente ogni fornitore. Sappiamo chi sono, come lavorano e quali valori trasmettono. La nostra filiera è corta, umana, sincera.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="closing-quote">
-            <div class="container">
-                <blockquote>
-                    "Il cibo è la nostra memoria collettiva. Preservare un sapore significa non dimenticare chi siamo."
-                </blockquote>
-            </div>
-        </section>
     </main>
+
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
@@ -104,4 +142,5 @@
     </footer>
 
 </body>
+<script src="script.js"></script>
 </html>
