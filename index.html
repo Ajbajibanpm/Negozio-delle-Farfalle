@@ -3,390 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouthVoice | News, Bandi e Opportunità per Giovani in Veneto e Lombardia</title>
-    <meta name="description" content="Hub territoriale per giovani tra Verona, Vicenza, Padova, Belluno e Mantova. Trova eventi, spazi di coworking e bandi attivi nel tuo territorio.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="percorso/del/tuo/olga-bot.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Il Negozio delle FARFALLE | Eccellenze di Borgo Valbelluna</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+<body>
 
-<body class="bg-slate-900 text-white font-sans overflow-x-hidden">
-
-    <nav class="fixed top-0 w-full z-[100] bg-slate-950/90 backdrop-blur-md backdrop-saturate-150 border-b border-white/5 px-6 py-4 flex justify-between items-center text-white">
-        <div class="text-2xl font-black tracking-tighter italic text-indigo-500">G.GIOVANI</div>
-        <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-[0.2em]">
-            <a href="javascript:void(0)" onclick="history.pushState('', document.title, window.location.pathname); location.reload();" class="hover:text-indigo-400 transition-colors">HOME</a>
-            <a href="javascript:void(0)" onclick="GoChiSiamo()" class="hover:text-indigo-400 transition-colors">CHI SIAMO</a>
-            <a href="javascript:void(0)" onclick="GoOpportunity()" class="hover:text-indigo-400 transition-colors">OPPORTUNITà</a>
-           <a href="javascript:void(0)" onclick="GoOperatori()" id="nav-operatori" class="hidden text-sm font-bold uppercase tracking-widest hover:text-indigo-400 transition-colors">Operatori</a>
-        </div>
-        <div class="flex items-center gap-4">
-        <button id="btn-login" onclick="toggleLoginModal()" class="px-6 py-2 bg-white text-black font-bold text-xs rounded-full hover:bg-indigo-500 hover:text-white transition-all">
-            ENTRA NELL'HUB
-        </button>
-
-        <div id="user-profile" class="hidden flex items-center gap-3">
-            <div class="flex items-center gap-3 bg-slate-800/80 px-4 py-2 rounded-full border border-white/10">
-                <i class="far fa-user text-indigo-400"></i>
-                <span class="text-xs font-bold text-white">elenadivino</span>
+    <header>
+        <nav class="nav-horizontal">
+            <div class="brand-inline">
+                <span class="prefix">il negozio delle</span>
+                <span class="main-name"><br>FARFALLE</span>
             </div>
-            <button onclick="handleLogout()" class="text-slate-400 hover:text-rose-500 transition-colors">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
+            <ul class="nav-links">
+                <li><a href="#">HOME</a></li>
+                <li><a href="chi-siamo.html">CHI SIAMO</a></li>
+                <li><a href="#dispensa">DISPENSA</a></li>
+                <li><a href="#ricette">RICETTE</a></li>
+                <li><a href="#eventi">EVENTI</a></li>
+            </ul>
+        </nav>   </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>Non è cibo, è territorio.</h2>
+            <p>Selezioniamo storie da gustare, nate tra i pendii di Mel e le rive del Piave.</p>
         </div>
-    </div>
-</nav>
+    </section>
 
-<div id="login-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-    <div class="bg-[#121826] w-full max-w-md rounded-[2rem] p-8 relative border border-white/10 shadow-2xl">
-        <button onclick="toggleLoginModal()" class="absolute top-6 right-6 text-white/50 hover:text-white">
-            <i class="fas fa-times"></i>
-        </button>
-
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-black uppercase italic text-white">Bentornato</h2>
-            <p class="text-slate-400 text-sm mt-2">Accedi per salvare le tue opportunità preferite</p>
-        </div>
-
-    <form id="hub-login-form" class="flex flex-col gap-4">
-        <div class="relative">
-            <i class="far fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
-            <input type="email" placeholder="Email" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-4 pl-12 pr-6 text-white outline-none focus:border-indigo-500">
-        </div>
-
-        <div class="relative">
-            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
-            <input type="password" placeholder="Password" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-4 pl-12 pr-6 text-white outline-none focus:border-indigo-500">
-        </div>
-
-        <button type="submit" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl transition-all uppercase tracking-widest text-sm mt-2">
-            ACCEDI
-        </button>
-
-        <div class="pt-4 border-t border-white/5 mt-2">
-            <p class="text-slate-400 text-sm text-center">
-                Non hai un account? 
-                <span onclick="toggleRegisterModal()" class="text-indigo-400 font-bold cursor-pointer hover:text-indigo-300 transition-colors">
-                    Registrati
-                </span>
-            </p>
-        </div>
-    </form>
-    </div>
-</div>
-<div id="logout-confirm-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-    <div class="bg-[#121826] w-full max-w-sm rounded-[2rem] p-8 relative border border-white/10 shadow-2xl text-center">
-        
-        <div class="mb-6">
-            <div class="w-16 h-16 bg-rose-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-sign-out-alt text-rose-500 text-xl"></i>
-            </div>
-            <h2 class="text-2xl font-black uppercase italic text-white">Sei sicuro?</h2>
-            <p class="text-slate-400 text-sm mt-2">Vuoi davvero uscire dal tuo account?</p>
-        </div>
-
-        <div class="flex flex-col gap-3">
-            <button onclick="confirmLogoutAction()" class="w-full py-4 bg-rose-600 hover:bg-rose-500 text-white font-black rounded-2xl transition-all uppercase tracking-widest text-sm">
-                SÌ, ESCI
-            </button>
-            <button onclick="toggleLogoutModal()" class="w-full py-4 bg-transparent border border-white/10 hover:bg-white/5 text-white font-bold rounded-2xl transition-all uppercase tracking-widest text-xs">
-                ANNULLA
-            </button>
-        </div>
-    </div>
-</div>
-
-    <div id="page-wrapper">
-        <header class="relative h-screen w-full flex items-center justify-center px-12 md:px-24 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1920&q=80" 
-                 alt="Giovani che collaborano nel territorio di Verona e Padova"
-                 class="absolute inset-0 w-full h-full object-cover scale-110 blur-[2px] opacity-40">
-            <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/60 to-transparent"></div>
+    <section class="esperienze-prodotti">
+        <h2 class="section-title">Esperienze in Primo Piano</h2>
+        <div class="grid-prodotti">
             
-            <div class="relative z-10 max-w-7xl w-full">
-                <div class="max-w-3xl">
-                    <span class="inline-block px-4 py-1 border border-indigo-500 text-indigo-400 text-[10px] font-bold tracking-[0.3em] uppercase mb-6 italic">Punto di contatto territoriale per giovani</span>
-                    <h1 class="text-6xl md:text-8xl font-black leading-none mb-8 uppercase">Il tuo territorio, <br><span class="text-indigo-500">la tua voce.</span></h1>
-                    <p class="text-lg md:text-xl text-slate-300 font-medium max-w-xl leading-relaxed mb-10">
-                        Non limitarti a guardare. Proponi eventi, vota le iniziative e connettiti con la community di tutto il Veneto.
-                    </p>
-                    <div class="flex gap-4">
-                        <button onclick="esploraAreaVeneto()" class="px-8 py-4 bg-indigo-600 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-500/20 uppercase tracking-widest text-sm">Esplora l'area</button>
-                        <button id="trigger-Olga-Bot" class="px-8 py-4 bg-white/10 backdrop-blur-md rounded-xl font-bold hover:bg-white/20 transition-all border border-white/10 uppercase tracking-widest text-xs">Parla con Olga-Bot</button>
-                    </div>
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=800&q=80" alt="Mela Renetta di Mel">
+                <div class="card-body">
+                    <span class="tag">MELA RENETTA CANUTA (Loc. Conzago, MEL)</span>
+                    <h3>La  Renetta del Carattere</h3>
+                    <p>Per chi non cerca la perfezione estetica ma l'intensità. Aspra, decisa, con la buccia rugosa che profuma di terra. Sceglierla significa onorare la biodiversità di Borgo Valbelluna.</p>
                 </div>
-            </div>
-        </header>
+            </article>
 
-        <main class="w-full bg-white text-slate-900 py-24 px-12 md:px-24 relative z-20">
-            <div class="max-w-7xl mx-auto">
-                <div class="grid lg:grid-cols-12 gap-16">
-                    <div class="lg:col-span-8 space-y-24">
-                        
-                        <section>
-                            <div class="mb-8">
-                                <h2 class="text-3xl font-black uppercase tracking-tighter italic">Eventi e <span class="text-indigo-600">Iniziative Locali</span></h2>
-                                <p class="text-slate-500 text-[12px] font-bold uppercase tracking-wider mt-1">Cosa succede oggi nel tuo territorio.</p>
-                            </div>
-                            <div class="grid md:grid-cols-3 gap-6">
-                                <article href="javascript:void(0)" onclick="GoEvento1()" class="group relative aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer shadow-xl">
-                                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-                                    <div class="absolute bottom-6 left-6 right-6 text-white">
-                                        <span class="text-[9px] font-bold bg-indigo-600 px-2 py-1 rounded-full uppercase mb-2 inline-block tracking-widest">Padova</span>
-                                        <h3 class="text-xl font-bold leading-tight">Hackathon Territoriale 2026</h3>
-                                    </div>
-                                </article>
-                                <article href="javascript:void(0)" onclick="GoEvento2()" class="group relative aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer shadow-xl">
-                                    <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-                                    <div class="absolute bottom-6 left-6 right-6 text-white">
-                                        <span class="text-[9px] font-bold bg-rose-600 px-2 py-1 rounded-full uppercase mb-2 inline-block tracking-widest">Vicenza</span>
-                                        <h3 class="text-xl font-bold leading-tight">Workshop: Public Speaking</h3>
-                                    </div>
-                                </article>
-                                <article href="javascript:void(0)" onclick="GoEvento3()" class="group relative aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer shadow-xl">
-                                    <img src="https://plus.unsplash.com/premium_photo-1677048147637-c2a5f668fe56?q=80&w=387&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-                                    <div class="absolute bottom-6 left-6 right-6 text-white">
-                                        <span class="text-[9px] font-bold bg-indigo-600 px-2 py-1 rounded-full uppercase mb-2 inline-block tracking-widest">Padova</span>
-                                        <h3 class="text-xl font-bold leading-tight">Passeggiate patrimoniali Vicenza</h3>
-                                    </div>
-                                </article>
-                            </div>
-                        </section>
-
-                        <section>
-                            <div class="mb-10">
-                                <h2 class="text-4xl font-black uppercase tracking-tighter italic">News <span class="text-indigo-600">& Bandi Regionali</span></h2>
-                                <p class="text-slate-500 text-sm font-bold uppercase tracking-wider mt-2">Finanziamenti e aggiornamenti per giovani talenti.</p>
-                            </div>
-                            <div class="space-y-4">
-                                <a href="javascript:void(0)" onclick="GoArt1()" class="block group flex flex-col md:flex-row gap-8 p-6 rounded-[2.5rem] hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 cursor-pointer">
-                                    <div class="md:w-1/3 aspect-video rounded-[2rem] overflow-hidden">
-                                        <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    </div>
-                                    <div class="md:w-2/3 flex flex-col justify-center">
-                                        <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-600 transition-colors">Coworking gratuiti: la mappa per Verona e Mantova</h3>
-                                        <p class="text-slate-500 text-sm leading-relaxed italic">Scopri dove studiare e lavorare gratuitamente nel tuo comune.</p>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0)" onclick="GoArt2()" class="block group flex flex-col md:flex-row gap-8 p-6 rounded-[2.5rem] hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 cursor-pointer">
-                                    <div class="md:w-1/3 aspect-video rounded-[2rem] overflow-hidden">
-                                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    </div>
-                                    <div class="md:w-2/3 flex flex-col justify-center">
-                                        <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-600 transition-colors">Borghi Creativi: Rigenerazione Urbana in Veneto</h3>
-                                        <p class="text-slate-500 text-sm leading-relaxed italic">Come le residenze d'artista trasformano i piccoli centri in hub creativi.</p>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0)" onclick="GoArt3()" class="block group flex flex-col md:flex-row gap-8 p-6 rounded-[2.5rem] hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 cursor-pointer">
-                                    <div class="md:w-1/3 aspect-video rounded-[2rem] overflow-hidden">
-                                        <img src="https://images.unsplash.com/photo-1587355760421-b9de3226a046?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    </div>
-                                    <div class="md:w-2/3 flex flex-col justify-center">
-                                        <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-600 transition-colors">Mappare i bisogni: l'intervista a Gio Biondo</h3>
-                                        <p class="text-slate-500 text-sm leading-relaxed italic">Perché il protagonismo giovanile è l'unico motore per una vera rigenerazione.</p>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0)" onclick="GoArt4()" class="block group flex flex-col md:flex-row gap-8 p-6 rounded-[2.5rem] hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 cursor-pointer">
-                                    <div class="md:w-1/3 aspect-video rounded-[2rem] overflow-hidden">
-                                        <img src="https://plus.unsplash.com/premium_photo-1677419807538-4438f71414e5?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    </div>
-                                    <div class="md:w-2/3 flex flex-col justify-center">
-                                        <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-600 transition-colors">Pianta dimenticata sulla linea 11</h3>
-                                        <p class="text-slate-500 text-sm leading-relaxed italic">Dove regna la cura, il degrado si ferma: la storia che ha trasformato gli autobus.</p>
-                                    </div>
-                                </a>
-                               
-<a href="javascript:void(0)" onclick="GoArt5()" class="block group flex flex-col md:flex-row gap-8 p-6 rounded-[2.5rem] hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 cursor-pointer">
-    <div class="md:w-1/3 aspect-video rounded-[2rem] overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Startup Workshop">
-    </div>
-    <div class="md:w-2/3 flex flex-col justify-center">
-        <h3 class="text-2xl font-bold mb-3 group-hover:text-emerald-600 transition-colors uppercase italic tracking-tighter">Dall'Idea al Pitch: Il Futuro in Veneto</h3>
-        <p class="text-slate-500 text-sm leading-relaxed italic">Tra Design Thinking e grandi rivelazioni, i nuovi founders presentano i loro progetti (con un finale a base di pizza).</p>
-    </div>
-</a>
-
-
-                            </div>
-                        </section>
-                    </div>
-
-                    <aside class="lg:col-span-4 space-y-12">
-                        <div class="bg-slate-50 p-10 rounded-[3rem] border border-slate-100">
-                            <h3 class="text-xl font-black mb-8 border-b border-slate-200 pb-4 tracking-tighter uppercase italic text-indigo-600">Sondaggi del Momento</h3>
-                            <ul class="space-y-8">
-                                <li onclick="GoSond1()" class="flex items-start gap-4 group cursor-pointer">
-                                    <div class="bg-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white w-12 h-12 flex items-center justify-center rounded-2xl font-black shrink-0 transition-all">01</div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-800 uppercase text-sm">Trasporti Notturni Padova</h4>
-                                        <p class="text-[10px] text-slate-500 mt-1 uppercase font-bold tracking-widest">Aggiornamenti Viabilità</p>
-                                    </div>
-                                </li>
-                                <li onclick="GoSond2()" class="flex items-start gap-4 group cursor-pointer">
-                                    <div class="bg-rose-100 text-rose-600 group-hover:bg-rose-600 group-hover:text-white w-12 h-12 flex items-center justify-center rounded-2xl font-black shrink-0 transition-all">02</div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-800 uppercase text-sm">Salute Mentale Giovani</h4>
-                                        <p class="text-[10px] text-slate-500 mt-1 uppercase font-bold tracking-widest">Bandi e Supporto 2026</p>
-                                    </div>
-                                </li>
-                                <li onclick="GoSond3()" class="flex items-start gap-4 group cursor-pointer">
-                                    <div class="bg-emerald-100 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white w-12 h-12 flex items-center justify-center rounded-2xl font-black shrink-0 transition-all">03</div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-800 uppercase text-sm">Aree Calisthenics Belluno</h4>
-                                        <p class="text-[10px] text-slate-500 mt-1 uppercase font-bold tracking-widest">Mappatura Sport Outdoor</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="p-10 bg-slate-900 rounded-[3rem] text-white relative overflow-hidden shadow-2xl border border-white/5">
-                            <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-indigo-500/20 rounded-full blur-2xl"></div>
-                            <h3 class="text-xl font-black mb-4 tracking-tighter uppercase italic text-indigo-400">Quiz sul Territorio</h3>
-                            <p class="text-slate-400 text-xs leading-relaxed mb-8 relative z-10">Mettiti alla prova su Verona, Padova e Vicenza e guadagna badge digitali per il tuo profilo.</p>
-                            <button onclick="GoGIOCOQUIZ()" class="w-full py-4 bg-indigo-600 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 transition-all relative z-10">PARTECIPA AL QUIZ</button>
-                        </div>
-                    </aside>
+            <article class="card">
+                <img src="https://plus.unsplash.com/premium_photo-1726880614839-faa6caa3b3d4?q=80&w=643&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Miele di Castagno Bellunese">
+                <div class="card-body">
+                    <span class="tag">MIELE DI CASTAGNO (Bribano)</span>
+                    <h3>L'Oro Amaro dei Boschi</h3>
+                    <p>Un miele per chi ama i contrasti. Raccolto ai piedi delle Dolomiti, è denso e scuro. Parla di chi sa guardare oltre la dolcezza superficiale dei mieli industriali.</p>
                 </div>
-            </div>
-        </main>
-    </div>
+            </article>
 
-    <div id="ai-chat-window" class="chat-hidden fixed lg:absolute right-6 bottom-24 lg:right-20 lg:bottom-20 w-[calc(100%-3rem)] md:w-[400px] h-[500px] lg:h-[550px] bg-slate-900 lg:bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] flex flex-col shadow-2xl overflow-hidden z-[150] transition-all duration-300">
-        <div class="p-8 lg:p-6 border-b border-white/10 bg-white/5 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
-                <span class="text-sm font-bold tracking-widest uppercase text-white">Olga-Bot | Assistente Territoriale</span>
-            </div>
-            <button id="close-chat" class="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
-                <i class="fas fa-times text-xl text-white"></i>
-            </button>
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1673694800551-b84c5e7d2933?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Farina Mais Sponcio">
+                <div class="card-body">
+                    <span class="tag">FARINA MAIS SPONCIO (Pietra - Sospirolo)</span>
+                    <h3>Il Rituale della Lentezza</h3>
+                    <p>Non è una polenta, è un ritorno a casa. Lo Sponcio richiede tempo, pazienza e fuoco. Per chi custodisce il valore dell'attesa.</p>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1587920710219-f6f9804dc10d?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Vino Rosso Belluno">
+                <div class="card-body">
+                    <span class="tag">VINO ROSSO RESISTENTE (Colli di Mel)</span>
+                    <h3>Il Sorso della Resistenza</h3>
+                    <p>Viti che sfidano l'altitudine. Un rosso che racconta la fierezza di chi coltiva in pendenza. Per spiriti liberi e coraggiosi.</p>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1667823885519-63329c1b63b3?q=80&w=435&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mela Golden Mel">
+                <div class="card-body">
+                    <span class="tag">MELA GOLDEN BIO (Villa di Villa)</span>
+                    <h3>La Dolcezza Equilibrista</h3>
+                    <p>Croccante e solare. È la scelta di chi cerca l'armonia quotidiana, coltivata nei frutteti baciati dal sole sopra il castello di Zumelle.</p>
+                </div>
+            </article>
+
         </div>
-        <div id="chat-container" class="flex-1 p-6 overflow-y-auto space-y-4 text-white">
-            <div class="msg-bot">
-                <div class="bubble bg-white/10 p-4 rounded-2xl rounded-tl-none inline-block max-w-[85%]">
-                    Ciao! Sono Olga, la tua assistente AI. Come posso aiutarti oggi?
-                </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="symbol">🦋</div>
+                <span class="footer-brand">FARFALLE</span>
+                <p>Bottega Alimentare • Mel di Borgo Valbelluna</p>
+            </div>
+            <div class="footer-info">
+                <p>Via Roma, 12 - Mel (BL) • Naturalmente Bellunese.</p>
             </div>
         </div>
-        <form id="chat-form" class="p-6 bg-slate-800 lg:bg-slate-900/50">
-            <div class="relative">
-                <input id="chat-input" type="text" autocomplete="off" placeholder="Chiedimi di lavoro, eventi o città..." 
-                       class="w-full bg-white/10 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-indigo-500 text-sm transition-all text-white">
-                <button type="submit" class="absolute right-4 top-1/2 -translate-y-1/2 text-indigo-400 hover:text-indigo-300">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <button id="open-chat" class="fixed bottom-6 right-6 w-16 h-16 bg-indigo-600 rounded-full shadow-2xl z-[140] flex items-center justify-center text-white text-2xl hover:scale-110 transition-transform">
-        <i class="fas fa-comment-dots"></i>
-    </button>
-
-    <footer class="bg-slate-900 py-12 px-6 text-center border-t border-white/5">
-        <p class="text-slate-500 font-bold text-[10px] uppercase tracking-[0.4em]">YouthVoice 2026 | Progetto di partecipazione giovanile Verona, Vicenza, Padova, Belluno, Mantova.</p>
     </footer>
 
-<div id="login-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-    <div class="bg-[#121826] w-full max-w-md rounded-[2rem] p-8 relative border border-white/10 shadow-2xl">
-        
-        <button onclick="toggleLoginModal()" class="absolute top-6 right-6 text-white/50 hover:text-white">
-            <i class="fas fa-times text-xl"></i>
-        </button>
+</body>
+<script src="script.js">
 
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-black uppercase italic tracking-tighter text-white">Bentornato</h2>
-            <p class="text-slate-400 text-sm mt-2">Accedi per salvare le tue opportunità preferite</p>
-        </div>
-
-        <form id="hub-login-form" class="flex flex-col gap-4">
-            <div class="relative">
-                <i class="far fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                <input type="email" placeholder="Email" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-4 pl-12 pr-6 text-white outline-none focus:border-indigo-500">
-            </div>
-
-            <div class="relative">
-                <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                <input type="password" placeholder="Password" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-4 pl-12 pr-6 text-white outline-none focus:border-indigo-500">
-            </div>
-
-            <button type="submit" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl transition-all uppercase tracking-widest text-sm mt-2">
-                ACCEDI
-            </button>
-
-            <div class="pt-4 border-t border-white/5 mt-2">
-                <p class="text-slate-400 text-sm text-center">
-                    Non hai un account? 
-                    <span onclick="toggleRegisterModal()" class="text-indigo-400 font-bold cursor-pointer hover:text-indigo-300 transition-colors">
-                        Registrati
-                    </span>
-                </p>
-            </div>
-        </form>
-    </div>
-</div>
-
-    <div id="register-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-        <div class="bg-[#121826] w-full max-w-lg rounded-[2rem] p-8 relative border border-white/10 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleRegisterModal()" class="absolute top-6 right-6 text-white/50 hover:text-white">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <h2 class="text-3xl font-black uppercase italic text-white text-center mb-6">Crea Account</h2>
-        <form id="hub-register-form" class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-                <input type="text" id="reg-nome" placeholder="Nome" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-3 px-6 text-white outline-none focus:border-indigo-500">
-                <input type="text" id="reg-cognome" placeholder="Cognome" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-3 px-6 text-white outline-none focus:border-indigo-500">
-            </div>
-            <input type="email" id="reg-email" placeholder="Email" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-3 px-6 text-white outline-none focus:border-indigo-500">
-            
-            <div class="grid grid-cols-2 gap-4">
-                <input type="password" id="reg-pass" placeholder="Password" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-3 px-6 text-white outline-none focus:border-indigo-500">
-                <input type="password" id="reg-pass-confirm" placeholder="Conferma Password" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-3 px-6 text-white outline-none focus:border-indigo-500">
-            </div>
-
-            <input type="number" id="reg-anno" placeholder="Anno di nascita" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-3 px-6 text-white outline-none">
-            
-            <select id="reg-provincia" required class="w-full bg-slate-800 border border-white/5 rounded-2xl py-3 px-6 text-white outline-none appearance-none">
-                <option value="" disabled selected>Provincia di preferenza</option>
-                <option value="venezia">Venezia</option>
-                <option value="padova">Padova</option>
-                <option value="verona">Verona</option>
-                <option value="treviso">Treviso</option>
-                <option value="vicenza">Vicenza</option>
-                <option value="rovigo">Rovigo</option>
-                <option value="belluno">Belluno</option>
-                <option value="altro">Altro</option>
-            </select>
-
-            <div class="p-4 bg-slate-900/50 rounded-2xl border border-white/5">
-                <div class="flex gap-6">
-                    <label class="flex items-center gap-2 cursor-pointer text-sm"><input type="radio" name="u-type" value="utente" checked onclick="toggleEntityField(false)"> Utente</label>
-                    <label class="flex items-center gap-2 cursor-pointer text-sm"><input type="radio" name="u-type" value="ente" onclick="toggleEntityField(true)"> Ente/Assoc.</label>
-                </div>
-                <div id="entity-name-container" class="hidden mt-4">
-                    <input type="text" id="reg-ente" placeholder="Nome Ente o Associazione" class="w-full bg-slate-800 border border-indigo-500/30 rounded-xl py-3 px-6 text-white outline-none">
-                </div>
-            </div>
-            <button type="submit" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl uppercase text-sm">REGISTRATI</button>
-        </form>
-        </div>
-    </div>
-
-    <div id="logout-confirm-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-        <div class="bg-[#121826] w-full max-w-sm rounded-[2rem] p-8 relative border border-white/10 shadow-2xl text-center">
-            <h2 class="text-2xl font-black uppercase italic text-white mb-6">Sei sicuro di voler uscire?</h2>
-            <div class="flex flex-col gap-3">
-                <button onclick="confirmLogoutAction()" class="w-full py-4 bg-rose-600 hover:bg-rose-500 text-white font-black rounded-2xl uppercase text-sm">SÌ, ESCI</button>
-                <button onclick="toggleLogoutModal()" class="w-full py-4 bg-transparent border border-white/10 text-white font-bold rounded-2xl uppercase text-xs">ANNULLA</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</html>
+</script></html>
