@@ -425,7 +425,15 @@ function togglePreferito(id) {
         preferiti.push(id);
     }
     localStorage.setItem('preferiti_farfalle', JSON.stringify(preferiti));
-    updateGallery();
+    
+    // Invece di updateGallery(), aggiorniamo solo l'aspetto del bottone
+    // per non far saltare la card in cima immediatamente
+    const btn = document.querySelector(`button[onclick="togglePreferito(${id})"] span`);
+    if (btn) {
+        const isFav = preferiti.includes(id);
+        btn.innerHTML = isFav ? '★' : '☆';
+        btn.style.color = isFav ? '#d4a373' : '#ccc';
+    }
 }
 
 // --- LOGICA DI NAVIGAZIONE ---
@@ -528,48 +536,47 @@ function updateGallery() {
     const selectedCat = filterCategory ? filterCategory.value : 'all';
     const selectedSort = sortOrder ? sortOrder.value : 'new';
 
-    let result = prodotti.filter(p => {
+    let filtrati = prodotti.filter(p => {
         const matchesSearch = p.nome.toLowerCase().includes(searchTerm) || p.desc.toLowerCase().includes(searchTerm);
-        
-        // Logica Filtro Categorie + Preferiti
-        let matchesCat;
-        if (selectedCat === 'fav') {
-            matchesCat = preferiti.includes(p.id);
-        } else {
-            matchesCat = selectedCat === 'all' || p.categoria.includes(selectedCat);
-        }
-        
+        let matchesCat = (selectedCat === 'fav') ? preferiti.includes(p.id) : (selectedCat === 'all' || p.categoria.includes(selectedCat));
         return matchesSearch && matchesCat;
     });
 
-    // Ordinamento
-    result.sort((a, b) => {
-        const isAFav = preferiti.includes(a.id);
-        const isBFav = preferiti.includes(b.id);
-
-        // 1. Priorità assoluta ai preferiti (stanno sempre sopra)
-        if (isAFav && !isBFav) return -1;
-        if (!isAFav && isBFav) return 1;
-
-        // 2. Se entrambi sono preferiti (o entrambi no), applica l'ordinamento selezionato
-        if (selectedSort === 'alpha') {
-            return a.nome.localeCompare(b.nome);
-        } else if (selectedSort === 'price-asc') {
-            return a.prezzoUnita - b.prezzoUnita;
-        } else if (selectedSort === 'new') {
-            return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
-        }
+    // ORDINAMENTO
+    filtrati.sort((a, b) => {
+        // Se l'ordinamento è impostato su "novità"
+        if (selectedSort === 'new') {
+            // Se 'a' è nuovo e 'b' no, 'a' va sopra (-1)
+            if (a.isNew && !b.isNew) return -1;
+            // Se 'b' è nuovo e 'a' no, 'b' va sopra (1)
+            if (!a.isNew && b.isNew) return 1;
+            // Se entrambi sono nuovi o entrambi no, mantieni ordine originale
+            return 0;
+        } 
+        
+        if (selectedSort === 'alpha') return a.nome.localeCompare(b.nome);
+        if (selectedSort === 'price-asc') return a.prezzoUnita - b.prezzoUnita;
         return 0;
     });
 
-    renderProdotti(result);
+    // SEPARAZIONE FISSA: Preferiti in alto, Altri sotto
+    // Questa struttura garantisce che i preferiti siano in cima, 
+    // e all'interno del gruppo "Altri", le novità (isNew: true) siano le prime visibili.
+    const listaPreferiti = filtrati.filter(p => preferiti.includes(p.id));
+    const listaAltri = filtrati.filter(p => !preferiti.includes(p.id));
+
+    renderProdotti([...listaPreferiti, ...listaAltri]);
 }
 
+// --- AVVIO ---
 // --- AVVIO ---
 document.addEventListener('DOMContentLoaded', () => {
     inserisciNav();
     if (grid) {
-        renderProdotti(prodotti);
+        // CORREZIONE: Non usare renderProdotti(prodotti), 
+        // ma chiama updateGallery() per attivare subito l'ordine Novità + Preferiti
+        updateGallery(); 
+
         if (searchInput) searchInput.addEventListener('input', updateGallery);
         if (filterCategory) filterCategory.addEventListener('change', updateGallery);
         if (sortOrder) sortOrder.addEventListener('change', updateGallery);
