@@ -3,171 +3,430 @@
  */
 const prodotti = [
     { 
+        id: 1,
         nome: "Mela Renetta Canuta", 
         prezzoUnita: 0.70, 
         unita: "al pezzo",
         prezzoChilo: 2.80,
         categoria: ["vegetali", "ortaggi"], 
+        diet: ["veg", "vegan", "gf", "lf"], 
+        isNew: true, 
         provenienza: "Loc. Conzago, Mel",
-        desc: "Per chi non cerca la perfezione estetica ma l'intensità. Aspra, decisa, con la buccia rugosa che profuma di terra. Sceglierla significa onorare la biodiversità di Borgo Valbelluna.",
+        desc: "Per chi non cerca la perfezione estetica ma l'intensità. Aspra, decisa, con la buccia rugosa che profuma di terra.",
         immagine: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=800&q=80", 
         data: "2024-01-10" 
     },
     { 
+        id: 2,
         nome: "Miele di Castagno Bellunese", 
         prezzoUnita: 7.50, 
         unita: "vasetto 500g",
         prezzoChilo: 15.00,
         categoria: ["vegetali"], 
+        diet: ["veg", "gf", "lf"],
+        isNew: true,
         provenienza: "Bribano",
-        desc: "Un miele per chi ama i contrasti. Raccolto ai piedi delle Dolomiti, è denso e scuro. Parla di chi sa guardare oltre la dolcezza superficiale dei mieli industriali.",
+        desc: "Un miele per chi ama i contrasti. Raccolto ai piedi delle Dolomiti, è denso e scuro.",
         immagine: "https://plus.unsplash.com/premium_photo-1726880614839-faa6caa3b3d4?q=80&w=643&auto=format&fit=crop", 
         data: "2024-03-01" 
     },
     { 
+        id: 3,
         nome: "Farina Mais Sponcio", 
         prezzoUnita: 4.80, 
         unita: "sacchetto 1kg",
         prezzoChilo: 4.80,
         categoria: ["farine", "senza-glutine"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: true,
         provenienza: "Pietra - Sospirolo",
-        desc: "Non è una polenta, è un ritorno a casa. Lo Sponcio richiede tempo, pazienza e fuoco. Per chi custodisce il valore dell'attesa.",
+        desc: "Non è una polenta, è un ritorno a casa. Lo Sponcio richiede tempo, pazienza e fuoco.",
         immagine: "https://images.unsplash.com/photo-1587920710219-f6f9804dc10d?q=80&w=387&auto=format&fit=crop", 
         data: "2024-02-15" 
     },
     { 
+        id: 4,
         nome: "Vino Rosso Resistente", 
         prezzoUnita: 12.00, 
         unita: "bottiglia 750ml",
         prezzoChilo: 16.00,
         categoria: ["vini"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: true,
         provenienza: "Colli di Mel",
-        desc: "Viti che sfidano l'altitudine. Un rosso che racconta la fierezza di chi coltiva in pendenza. Per spiriti liberi e coraggiosi.",
+        desc: "Viti che sfidano l'altitudine. Un rosso che racconta la fierezza di chi coltiva in pendenza.",
         immagine: "https://images.unsplash.com/photo-1587920710219-f6f9804dc10d?q=80&w=387&auto=format&fit=crop", 
         data: "2024-03-20" 
     },
     { 
+        id: 5,
         nome: "Mela Golden Bio", 
         prezzoUnita: 0.50, 
         unita: "al pezzo",
         prezzoChilo: 2.20,
         categoria: ["vegetali"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: true,
         provenienza: "Villa di Villa",
-        desc: "Croccante e solare. È la scelta di chi cerca l'armonia quotidiana, coltivata nei frutteti baciati dal sole sopra il castello di Zumelle.",
+        desc: "Croccante e solare. Coltivata nei frutteti baciati dal sole sopra il castello di Zumelle.",
         immagine: "https://images.unsplash.com/photo-1667823885519-63329c1b63b3?q=80&w=435&auto=format&fit=crop", 
         data: "2024-03-25" 
     },
     { 
+        id: 6,
         nome: "Fagiolo Gialét", 
         prezzoUnita: 9.25, 
         unita: "confezione 500g",
         prezzoChilo: 18.50,
         categoria: ["vegetali", "senza-glutine"], 
+        diet: ["veg", "vegan", "gf", "lf"],
         provenienza: "Val Canzoi",
-        desc: "Perla gialla dalla buccia finissima, quasi impalpabile. Un tesoro locale raro che racchiude la delicatezza dei torrenti dolomitici.",
+        desc: "Perla gialla dalla buccia finissima. Un tesoro locale raro che racchiude la delicatezza dei torrenti dolomitici.",
         immagine: "https://plus.unsplash.com/premium_photo-1664527307810-63c15cb57346?q=80&w=387&auto=format&fit=crop", 
         data: "2024-04-01" 
     },
     { 
+        id: 7,
         nome: "Vino Rosso Pavana", 
         prezzoUnita: 13.50, 
         unita: "bottiglia 750ml",
         prezzoChilo: 18.00,
         categoria: ["vini"], 
+        diet: ["veg", "vegan", "gf", "lf"],
         provenienza: "Colderù, Lentiai",
         desc: "Un vitigno eroico che profuma di marasca e di resistenza al freddo. Il sorso fiero di chi coltiva dove altri hanno rinunciato.",
         immagine: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600", 
         data: "2024-03-10" 
     },
     { 
+        id: 8,
         nome: "Patate di Cesana", 
         prezzoUnita: 5.40, 
         unita: "sacco 3kg",
         prezzoChilo: 1.80,
         categoria: ["ortaggi"], 
+        diet: ["veg", "vegan", "gf", "lf"],
         provenienza: "Piana di Cesana",
-        desc: "Cresciute tra i sassi del Piave. Polpa soda e sapore antico di terra pulita, perfette per i rituali della cucina domenicale.",
+        desc: "Cresciute tra i sassi del Piave. Polpa soda e sapore antico di terra pulita, perfette per i rituali della cucina.",
         immagine: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=870&auto=format&fit=crop", 
         data: "2024-01-20" 
     },
     { 
+        id: 9,
         nome: "Farina di Segale", 
         prezzoUnita: 3.90, 
         unita: "sacchetto 1kg",
         prezzoChilo: 3.90,
         categoria: ["farine"], 
+        diet: ["veg", "vegan", "lf"],
         provenienza: "Passo San Boldo",
-        desc: "Coltivata dove l'aria si fa sottile. Una farina scura che regala pani dal profumo di confine e di vento di montagna.",
+        desc: "Coltivata dove l'aria si fa sottile. Una farina scura che regala pani dal profumo di confine e di vento.",
         immagine: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600", 
         data: "2024-02-10" 
     },
     { 
+        id: 10,
         nome: "Radicchio Verdon", 
         prezzoUnita: 2.10, 
         unita: "al mazzo",
         prezzoChilo: 8.50,
         categoria: ["ortaggi", "vegetali"], 
+        diet: ["veg", "vegan", "gf", "lf"],
         provenienza: "Orti di Trichiana",
         desc: "Piccole rose croccanti nate sotto la neve. Il primo risveglio della terra bellunese, un inno alla forza della natura.",
         immagine: "https://plus.unsplash.com/premium_photo-1675364285746-c99b72498ede?q=80&w=387&auto=format&fit=crop", 
         data: "2024-03-15" 
     },
     { 
+        id: 11,
         nome: "Confettura di Rosa Canina", 
         prezzoUnita: 7.00, 
         unita: "vasetto 250g",
         prezzoChilo: 28.00,
         categoria: ["vegetali"], 
+        diet: ["veg", "vegan", "gf", "lf"],
         provenienza: "Rive di Carve",
         desc: "Raccolta a mano dopo la prima brinata. Una carezza selvatica per il palato, ricca di una vitalità aspra e pura.",
         immagine: "https://images.unsplash.com/photo-1572281911253-7bdcf52d97e1?q=80&w=870&auto=format&fit=crop", 
         data: "2024-04-10" 
     },
     { 
+        id: 12,
         nome: "Noci Feltrine", 
         prezzoUnita: 4.75, 
         unita: "sacchetto 500g",
         prezzoChilo: 9.50,
         categoria: ["vegetali", "senza-glutine"], 
+        diet: ["veg", "vegan", "gf", "lf"],
         provenienza: "Valbelluna",
         desc: "Gherigli ricchi e oleosi. Il battito del cuore delle nostre campagne d'autunno, conservate con la cura di una volta.",
         immagine: "https://plus.unsplash.com/premium_photo-1669205336460-a237c324cc11?q=80&w=774&auto=format&fit=crop", 
         data: "2024-01-05" 
     },
     { 
+        id: 13,
         nome: "Sidro di Mele Bellunesi", 
         prezzoUnita: 9.00, 
         unita: "bottiglia 750ml",
         prezzoChilo: 12.00,
         categoria: ["vini"], 
+        diet: ["veg", "vegan", "gf", "lf"],
         provenienza: "Frazione Nave",
         desc: "Bollicine di montagna nate dal recupero di antichi frutteti. La freschezza croccante di un mattino di primavera.",
         immagine: "https://plus.unsplash.com/premium_photo-1722168009723-ff75c2f1abdb?q=80&w=870&auto=format&fit=crop", 
         data: "2024-03-18" 
     },
     { 
+        id: 14,
         nome: "Orzo di Mel", 
         prezzoUnita: 1.75, 
         unita: "confezione 500g",
         prezzoChilo: 3.50,
         categoria: ["vegetali"], 
+        diet: ["veg", "vegan", "lf"],
         provenienza: "Campagne di Mel",
         desc: "Il cereale della tempra. Essenziale per zuppe calde che sanno di focolare mentre fuori fischia il vento.",
         immagine: "https://plus.unsplash.com/premium_photo-1726138627013-b2c15eec0dd7?q=80&w=870&auto=format&fit=crop", 
         data: "2024-01-30" 
     },
     { 
+        id: 15,
         nome: "Zafferano dei Colli", 
         prezzoUnita: 12.50, 
         unita: "confezione 0.5g",
         prezzoChilo: 25000.00,
         categoria: ["vegetali"], 
+        diet: ["veg", "vegan", "gf", "lf"],
         provenienza: "Colli di Mel",
-        desc: "Pistilli essiccati al sole delle prealpi. Una spezia rara, raccolta petalo per petalo nel silenzio delle nostre colline.",
+        desc: "Pistilli essiccati al sole delle prealpi. Una spezia rara, raccolta petalo per petalo nel silenzio delle colline.",
         immagine: "https://images.unsplash.com/photo-1476994230281-1448088947db?q=80&w=387&auto=format&fit=crop", 
         data: "2024-04-15" 
+    },
+    { 
+        id: 16,
+        nome: "Dado Vegetale Naturale", 
+        prezzoUnita: 6.50, 
+        unita: "vasetto 200g",
+        prezzoChilo: 32.50,
+        categoria: ["dispensa"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: true,
+        provenienza: "Via Corte, Mel",
+        desc: "L'essenza dell'orto in vasetto. Solo verdure fresche di stagione e sale integrale, senza conservanti o glutammato. Il segreto per zuppe dal sapore autentico.",
+        immagine: "https://plus.unsplash.com/premium_photo-1706003920144-ca73554a6801?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-04-20" 
+    },
+    { 
+        id: 17,
+        nome: "Zucca in Agrodolce", 
+        prezzoUnita: 7.80, 
+        unita: "vasetto 300g",
+        prezzoChilo: 26.00,
+        categoria: ["vegetali", "dispensa"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: false,
+        provenienza: "Borgo Valbelluna",
+        desc: "Polpa soda di zucca coltivata senza pesticidi, lavorata con aceto di mele e aromi naturali. Perfetta per accompagnare i formaggi della nostra vallata.",
+        immagine: "https://images.unsplash.com/photo-1729182808185-a590b7fa10ec?q=80&w=327&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-03-12" 
+    },
+    { 
+        id: 18,
+        nome: "Sciroppo di Sambuco", 
+        prezzoUnita: 8.50, 
+        unita: "bottiglia 250ml",
+        prezzoChilo: 34.00,
+        categoria: ["bevande"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: true,
+        provenienza: "Rive di Mel",
+        desc: "Fiori bianchi raccolti a mano all'alba. Uno sciroppo delicato e freschissimo, ideale per un aperitivo 'Hugo' o per rinfrescare l'acqua estiva.",
+        immagine: "https://plus.unsplash.com/premium_photo-1687354173313-384e6470e7a8?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-05-02" 
+    },
+    { 
+        id: 19,
+        nome: "Pomodorini al Naturale", 
+        prezzoUnita: 5.20, 
+        unita: "vasetto 500g",
+        prezzoChilo: 10.40,
+        categoria: ["vegetali"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: false,
+        provenienza: "Orti di Mel",
+        desc: "Piccoli soli conservati in acqua e sale. Tutta la dolcezza del pomodoro maturato sulla pianta, pronto per condire una pasta che sa d'estate.",
+        immagine: "https://plus.unsplash.com/premium_photo-1675237625476-f3254820f14c?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-02-28" 
+    },
+    { 
+        id: 20,
+        nome: "Sapone Artigianale alle Erbe", 
+        prezzoUnita: 6.00, 
+        unita: "panetto 100g",
+        prezzoChilo: 60.00,
+        categoria: ["benessere"], 
+        diet: ["veg", "vegan"],
+        isNew: true,
+        provenienza: "Laboratorio Mel",
+        desc: "Dalla terra alla pelle. Prodotto con oleoliti di erbe officinali coltivate in azienda, deterge con dolcezza rispettando l'equilibrio naturale.",
+        immagine: "https://images.unsplash.com/photo-1605264964528-06403738d6dc?q=80&w=387&auto=format&fit=crop", 
+        data: "2024-04-25" 
+    },
+    { 
+        id: 21,
+        nome: "Composta di Cipolla Rossa", 
+        prezzoUnita: 6.80, 
+        unita: "vasetto 200g",
+        prezzoChilo: 34.00,
+        categoria: ["dispensa"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: false,
+        provenienza: "Borgo Valbelluna",
+        desc: "Cipolle rosse coltivate con metodo naturale e stufate lentamente. Una dolcezza rustica che accompagna divinamente i formaggi stagionati del territorio.",
+        immagine: "https://images.unsplash.com/photo-1594100585731-c41826948ea8?q=80&w=327&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-03-05" 
+    },
+    { 
+        id: 22,
+        nome: "Tisana del Riposo", 
+        prezzoUnita: 5.50, 
+        unita: "sacchetto 30g",
+        prezzoChilo: 183.33,
+        categoria: ["benessere"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: true,
+        provenienza: "Campagne di Mel",
+        desc: "Miscela di foglie di melissa, fiori di lavanda e petali di zafferano. Raccolta a mano ed essiccata a freddo per preservare gli oli essenziali.",
+        immagine: "https://plus.unsplash.com/premium_photo-1674406481284-43eba097a291?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dGV8ZW58MHx8MHx8fDA%3D", 
+        data: "2024-05-10" 
+    },
+    { 
+        id: 23,
+        nome: "Farina di Grano Tenero Tipo 1", 
+        prezzoUnita: 3.20, 
+        unita: "sacchetto 1kg",
+        prezzoChilo: 3.20,
+        categoria: ["farine"], 
+        diet: ["veg", "vegan", "lf"],
+        isNew: false,
+        provenienza: "Mel",
+        desc: "Grano coltivato senza l'uso di chimica di sintesi e macinato a pietra. Mantiene intatto il germe del grano per un pane profumato e nutriente.",
+        immagine: "https://images.unsplash.com/photo-1627735483792-233bf632619b?q=80&w=885&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-02-20" 
+    },
+    { 
+        id: 24,
+        nome: "Fiori di Zafferano Essiccati", 
+        prezzoUnita: 4.50, 
+        unita: "confezione 2g",
+        prezzoChilo: 2250.00,
+        categoria: ["dispensa"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: true,
+        provenienza: "Colli di Mel",
+        desc: "I petali viola dello zafferano, ricchi di proprietà antiossidanti. Ideali per decorare piatti gourmet o per arricchire infusi e dolci.",
+        immagine: "https://images.unsplash.com/photo-1631189945107-34e33ff1c648?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-05-15" 
+    },
+    { 
+        id: 25,
+        nome: "Passata di Pomodoro Antico", 
+        prezzoUnita: 4.90, 
+        unita: "bottiglia 500ml",
+        prezzoChilo: 9.80,
+        categoria: ["vegetali", "dispensa"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: false,
+        provenienza: "Orti di Mel",
+        desc: "Solo pomodori maturati al sole e un pizzico di sale marino. Una consistenza densa e un sapore verace che riporta ai pranzi della domenica.",
+        immagine: "https://plus.unsplash.com/premium_photo-1668447346308-a611fb5e5c31?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-04-05" 
+    },
+    { 
+        id: 26,
+        nome: "Zucchine sott'Olio ai Grani di Pepe", 
+        prezzoUnita: 7.20, 
+        unita: "vasetto 280g",
+        prezzoChilo: 25.71,
+        categoria: ["dispensa"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: false,
+        provenienza: "Orti di Mel",
+        desc: "Zucchine fresche lavorate dal crudo per preservarne la croccantezza. Conservate in olio extravergine con pepe nero in grani e foglie di menta selvatica.",
+        immagine: "https://images.unsplash.com/photo-1612151387873-c8ac8578d4cb?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-05-18" 
+    },
+    { 
+        id: 27,
+        nome: "Oleolito di Iperico", 
+        prezzoUnita: 11.00, 
+        unita: "flacone 50ml",
+        prezzoChilo: 220.00,
+        categoria: ["benessere"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: true,
+        provenienza: "Pendici del Monte Artent",
+        desc: "L'erba di San Giovanni macerata al sole per 40 giorni. Un rimedio antico e potente per rigenerare la pelle, preparato secondo tradizione contadina.",
+        immagine: "https://images.unsplash.com/photo-1749991059397-26af8f50029b?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-06-01" 
+    },
+    { 
+        id: 28,
+        nome: "Miele di Tarassaco", 
+        prezzoUnita: 8.00, 
+        unita: "vasetto 400g",
+        prezzoChilo: 20.00,
+        categoria: ["vegetali"], 
+        diet: ["veg", "gf", "lf"],
+        isNew: false,
+        provenienza: "Prati di Lentiai",
+        desc: "Il primo respiro della primavera. Un miele cremoso, dal colore giallo intenso e dal profumo pungente che ricorda i campi in fiore.",
+        immagine: "https://images.unsplash.com/photo-1645871302770-fa6c882a8e2b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjN8fE1hcm1hbGFkZXxlbnwwfHwwfHx8MA%3D%3D", 
+        data: "2024-04-05" 
+    },
+    { 
+        id: 29,
+        nome: "Sale Integrale allo Zafferano", 
+        prezzoUnita: 5.80, 
+        unita: "confezione 100g",
+        prezzoChilo: 58.00,
+        categoria: ["dispensa"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: true,
+        provenienza: "Colli di Mel",
+        desc: "Sale marino integrale arricchito con stimmi di zafferano tritati. Un tocco prezioso per finire piatti di pesce, risotti o carni bianche.",
+        immagine: "https://plus.unsplash.com/premium_photo-1668447346308-a611fb5e5c31?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+        data: "2024-06-05" 
+    },
+    { 
+        id: 30,
+        nome: "Confettura Extra di More", 
+        prezzoUnita: 6.50, 
+        unita: "vasetto 220g",
+        prezzoChilo: 29.54,
+        categoria: ["vegetali"], 
+        diet: ["veg", "vegan", "gf", "lf"],
+        isNew: false,
+        provenienza: "Rive di Carve",
+        desc: "More selvatiche raccolte lungo i sentieri di montagna. Solo frutta e zucchero di canna, cotta a bassa temperatura per mantenere il colore rubino.",
+        immagine: "https://images.unsplash.com/photo-1663276339235-5bba5645e077?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGFyayUyMGphbXxlbnwwfHwwfHx8MA%3D%3D", 
+        data: "2024-05-25" 
     }
+
 ];
+
+// --- GESTIONE PREFERITI ---
+let preferiti = JSON.parse(localStorage.getItem('preferiti_farfalle')) || [];
+
+function togglePreferito(id) {
+    if (preferiti.includes(id)) {
+        preferiti = preferiti.filter(favId => favId !== id);
+    } else {
+        preferiti.push(id);
+    }
+    localStorage.setItem('preferiti_farfalle', JSON.stringify(preferiti));
+    updateGallery();
+}
 
 // --- LOGICA DI NAVIGAZIONE ---
 function inserisciNav() {
@@ -189,25 +448,32 @@ function inserisciNav() {
     const placeholder = document.getElementById('nav-placeholder');
     if (placeholder) {
         placeholder.innerHTML = navContent;
-        
-        // Evidenzia link attivo
         const currentPath = window.location.pathname.split("/").pop() || "index.html";
         document.querySelectorAll('.nav-links a').forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active');
-            }
+            if (link.getAttribute('href') === currentPath) link.classList.add('active');
         });
     }
 }
 
-// --- LOGICA PRODOTTI (Solo per pagina Dispensa) ---
+// --- LOGICA PRODOTTI ---
 const grid = document.getElementById('productGrid');
 const searchInput = document.getElementById('searchInput');
 const filterCategory = document.getElementById('filterCategory');
 const sortOrder = document.getElementById('sortOrder');
 
+function getDietDots(dietArray) {
+    if (!dietArray) return '';
+    const colors = {
+        'veg': '#708238', 'vegan': '#a9ba9d', 'gf': '#e6ccb2', 'lf': '#b7b7a4'
+    };
+    const labels = { 'veg': 'Vegetariano', 'vegan': 'Vegano', 'gf': 'Senza Glutine', 'lf': 'Senza Lattosio' };
+    return dietArray.map(d => 
+        `<span title="${labels[d]}" style="display:inline-block; width:8px; height:8px; background:${colors[d]}; border-radius:50%; margin-left:4px;"></span>`
+    ).join('');
+}
+
 function renderProdotti(lista) {
-    if (!grid) return; // Se non siamo nella pagina dispensa, esci
+    if (!grid) return;
     grid.innerHTML = '';
     
     if (lista.length === 0) {
@@ -216,20 +482,39 @@ function renderProdotti(lista) {
     }
 
     lista.forEach(p => {
+        const isFav = preferiti.includes(p.id);
         const card = `
-            <article class="card">
-                <img src="${p.immagine}" alt="${p.nome}">
-                <div class="card-body">
-                    <span class="tag">${p.provenienza.toUpperCase()}</span>
-                    <h3>${p.nome}</h3>
-                    <p>${p.desc}</p>
-                    <div class="prezzo-container" style="margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1rem;">
-                        <span class="prezzo-unita" style="display: block; font-family: 'Playfair Display'; font-size: 1.4rem; font-weight: 700;">
-                            ${p.prezzoUnita.toFixed(2)} € <small style="font-size: 0.8rem; font-weight: 400; font-family: 'Montserrat';">(${p.unita})</small>
-                        </span>
-                        <span class="prezzo-chilo" style="display: block; font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 1px;">
-                            ${p.prezzoChilo.toFixed(2)} € / kg
-                        </span>
+            <article class="card" style="position: relative; margin-bottom: 2rem;">
+                <div class="card-image-container" style="position: relative; overflow: hidden; border-radius: 4px;">
+                    <img src="${p.immagine}" alt="${p.nome}" style="width: 100%; height: 250px; object-fit: cover; display: block;">
+                    
+                    <button class="fav-btn" onclick="togglePreferito(${p.id})" 
+                            style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9); border: none; width: 32px; height: 32px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <span style="color: ${isFav ? '#d4a373' : '#ccc'}; font-size: 1.2rem;">${isFav ? '★' : '☆'}</span>
+                    </button>
+
+                    ${p.isNew ? `
+                        <div style="position: absolute; bottom: 0; left: 0; background: rgba(212, 163, 115, 0.9); color: white; padding: 6px 15px; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; font-family: 'Montserrat';">
+                            Nuovo Arrivo
+                        </div>
+                    ` : ''}
+                </div>
+
+                <div class="card-body" style="padding: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <span class="tag" style="font-size: 0.65rem; letter-spacing: 1px; color: #888; font-family: 'Montserrat';">${p.provenienza.toUpperCase()}</span>
+                        <div class="diet-dots">${getDietDots(p.diet)}</div>
+                    </div>
+                    
+                    <h3 style="margin: 0.5rem 0; font-family: 'Playfair Display'; font-weight: 700; font-size: 1.3rem; color: #333;">
+                        ${p.nome}
+                    </h3>
+                    
+                    <p style="font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 1.2rem; font-family: 'Montserrat';">${p.desc}</p>
+                    
+                    <div class="prezzo-container" style="border-top: 1px solid #f0f0f0; padding-top: 1rem; display: flex; align-items: baseline; gap: 8px;">
+                        <span style="font-family: 'Playfair Display'; font-size: 1.3rem; font-weight: 700; color: #222;">${p.prezzoUnita.toFixed(2)} €</span>
+                        <small style="font-size: 0.75rem; color: #999; font-family: 'Montserrat'; text-transform: lowercase;">/ ${p.unita}</small>
                     </div>
                 </div>
             </article>`;
@@ -238,29 +523,51 @@ function renderProdotti(lista) {
 }
 
 function updateGallery() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const selectedCat = filterCategory.value;
-    const selectedSort = sortOrder.value;
+    if (!grid) return;
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+    const selectedCat = filterCategory ? filterCategory.value : 'all';
+    const selectedSort = sortOrder ? sortOrder.value : 'new';
 
     let result = prodotti.filter(p => {
         const matchesSearch = p.nome.toLowerCase().includes(searchTerm) || p.desc.toLowerCase().includes(searchTerm);
-        const matchesCat = selectedCat === 'all' || p.categoria.includes(selectedCat);
+        
+        // Logica Filtro Categorie + Preferiti
+        let matchesCat;
+        if (selectedCat === 'fav') {
+            matchesCat = preferiti.includes(p.id);
+        } else {
+            matchesCat = selectedCat === 'all' || p.categoria.includes(selectedCat);
+        }
+        
         return matchesSearch && matchesCat;
     });
 
-    if (selectedSort === 'alpha') result.sort((a, b) => a.nome.localeCompare(b.nome));
-    else if (selectedSort === 'price-asc') result.sort((a, b) => a.prezzoUnita - b.prezzoUnita);
-    else if (selectedSort === 'new') result.sort((a, b) => new Date(b.data) - new Date(a.data));
+    // Ordinamento
+    result.sort((a, b) => {
+        const isAFav = preferiti.includes(a.id);
+        const isBFav = preferiti.includes(b.id);
+
+        // 1. Priorità assoluta ai preferiti (stanno sempre sopra)
+        if (isAFav && !isBFav) return -1;
+        if (!isAFav && isBFav) return 1;
+
+        // 2. Se entrambi sono preferiti (o entrambi no), applica l'ordinamento selezionato
+        if (selectedSort === 'alpha') {
+            return a.nome.localeCompare(b.nome);
+        } else if (selectedSort === 'price-asc') {
+            return a.prezzoUnita - b.prezzoUnita;
+        } else if (selectedSort === 'new') {
+            return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+        }
+        return 0;
+    });
 
     renderProdotti(result);
 }
 
 // --- AVVIO ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Carica il menu sempre
     inserisciNav();
-    
-    // 2. Se siamo nella pagina dispensa, attiva i filtri e mostra i prodotti
     if (grid) {
         renderProdotti(prodotti);
         if (searchInput) searchInput.addEventListener('input', updateGallery);

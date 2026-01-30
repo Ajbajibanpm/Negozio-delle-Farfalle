@@ -428,3 +428,30 @@ blockquote {
     margin: 0.5rem 0;
     font-family: 'Playfair Display', serif;
 }
+
+.fav-btn { transition: transform 0.2s; }
+.fav-btn:hover { transform: scale(1.1); }
+
+/* Effetto Hover sulla Card */
+.card {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Rendi i link della navigazione più eleganti */
+.nav-links a {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    font-weight: 400;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #d4a373; /* Colore oro/terra */
+}
+
+/* La stellina dei preferiti */
+.fav-btn:hover span {
+    color: #d4a373 !important;
+}
