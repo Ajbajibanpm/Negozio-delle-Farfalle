@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispensa | Il Negozio delle FARFALLE</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div id="nav-placeholder"></div>
+    </header>
+
+    <section class="dispensa-header">
+        <h1 class="section-title">La Nostra Dispensa</h1>
+        <p class="subtitle">Eccellenze selezionate da Borgo Valbelluna e dintorni.</p>
+    </section>
+
+    <section class="filtri-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Cerca un prodotto...">
+        </div>
+        
+        <div class="controls">
+            <select id="filterCategory">
+                <option value="all">Tutte le categorie</option>
+                <option value="vegetali">Vegetali</option>
+                <option value="senza-glutine">Senza Glutine</option>
+                <option value="ortaggi">Ortaggi</option>
+                <option value="vini">Vini</option>
+                <option value="farine">Farine</option>
+            </select>
+
+            <select id="sortOrder">
+                <option value="default">Ordina per...</option>
+                <option value="alpha">Alfabetico (A-Z)</option>
+                <option value="price-asc">Prezzo (Crescente)</option>
+                <option value="new">Novità</option>
+            </select>
+        </div>
+    </section>
+
+    <section class="prodotti-catalogo">
+        <div class="grid-prodotti" id="productGrid">
+            </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="symbol">🦋</div>
+                <span class="footer-brand">FARFALLE</span>
+                <p>Bottega Alimentare • Mel di Borgo Valbelluna</p>
+            </div>
+            <div class="footer-info">
+                <p>Via Roma, 12 - Mel (BL) • Naturalmente Bellunese.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

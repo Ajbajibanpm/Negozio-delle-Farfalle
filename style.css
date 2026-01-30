@@ -32,12 +32,16 @@ body {
 
 /* Navigation */
 header {
-    background: white;
-    padding: 2rem;
-    border-bottom: 5px solid var(--iuta);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    background-color: #fff !important; /* Sfondo bianco */
+    position: relative;
+    z-index: 9999;
+    min-height: 80px;
+    border-bottom: 1px solid #ddd;
+}
+
+#nav-placeholder {
+    display: block !important;
+    visibility: visible !important;
 }
 
 nav {
@@ -365,4 +369,62 @@ blockquote {
     .manifesto-grid, .values-grid, .grid-gallery {
         grid-template-columns: 1fr;
     }
+}
+
+/*CATALOGO DISPENSA*/
+
+
+/* Filtri e Ricerca */
+.filtri-container {
+    padding: 2rem 5%;
+    background: #f9f8f4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-box input, .controls select {
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 4px;
+}
+
+.search-box input {
+    min-width: 300px;
+}
+
+.dispensa-header {
+    text-align: center;
+    padding: 4rem 5% 2rem;
+    background-color: #fff;
+}
+
+.prezzo {
+    font-weight: 600;
+    color: #4a5d4e; /* Un verde scuro naturale */
+    margin: 0.5rem 0;
+}
+
+.prodotti-catalogo {
+    padding: 2rem 5% 5rem;
+}
+
+.nav-links a.active {
+    border-bottom: 2px solid #000;
+}
+
+.descrizione-breve {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+}
+
+.card-body h3 {
+    margin: 0.5rem 0;
+    font-family: 'Playfair Display', serif;
 }
