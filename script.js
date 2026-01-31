@@ -2,35 +2,68 @@
  * DATABASE PRODOTTI - DISPENSA "IL NEGOZIO DELLE FARFALLE"
  */
 // 1. Dichiara la variabile vuota
-let prodotti = [];
-// 2. Funzione per caricare i dati dal file esterno
+let prodotti = []; 
+
 async function caricaProdotti() {
     try {
-        const response = await fetch('prodotti.json'); // Percorso del file
-        if (!response.ok) throw new Error("Errore nel caricamento file JSON");
+        console.log("Inizio caricamento...");
         
-        prodotti = await response.json();
+        // URL di esportazione CSV con cache buster per il refresh live
+        const id = "1GiLgBDbPRFQtf4HDmH_PVvQ6azT4EpdGI7mHnn4_z0Q";
+        const gid = "1440058023";
+        const url = `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&gid=${gid}&v=${new Date().getTime()}`;
         
-        // 3. Una volta caricati i dati, inizializza la galleria
-        updateGallery();
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            console.error("Errore nel caricamento dei dati");
+            return;
+        }
+
+        const csvText = await response.text();
+        const righe = csvText.split(/\r?\n/).filter(r => r.trim() !== "");
+
+        // Parsing manuale del CSV per trasformarlo in oggetti
+        prodotti = righe.slice(1).map(riga => {
+            const col = riga.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            const p = (v) => v ? v.replace(/^"|"$/g, '').trim() : "";
+
+            return {
+                id: parseInt(p(col[0])),
+                nome: p(col[1]),
+                prezzoUnita: parseFloat(p(col[2]).replace(',', '.')), 
+                unita: p(col[3]),
+                prezzoChilo: parseFloat(p(col[4]).replace(',', '.')),
+                categoria: p(col[5]) ? p(col[5]).split(';') : [],
+                diet: p(col[6]) ? p(col[6]).split(';') : [],
+                isNew: p(col[7]).toLowerCase() === 'true',
+                provenienza: p(col[8]),
+                desc: p(col[9]),
+                immagine: p(col[10]),
+                data: p(col[11])
+            };
+        });
+
+        console.log("Dati caricati con successo:", prodotti);
+        updateGallery(); 
+
     } catch (error) {
-        console.error("Errore:", error);
+        console.error("Errore critico:", error);
     }
 }
 
 // 4. Modifica l'avvio nel DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
     inserisciNav();
-    if (grid) {
-        // Avvia il caricamento invece di chiamare subito updateGallery
-        caricaProdotti(); 
+    if (document.getElementById('productGrid')) {
+        caricaProdotti(); // Questa funzione caricherà i dati E POI chiamerà updateGallery
 
+        // Listener per i filtri (rimangono invariati)
         if (searchInput) searchInput.addEventListener('input', updateGallery);
         if (filterCategory) filterCategory.addEventListener('change', updateGallery);
         if (sortOrder) sortOrder.addEventListener('change', updateGallery);
     }
 });
-
 // --- GESTIONE PREFERITI ---
 let preferiti = JSON.parse(localStorage.getItem('preferiti_farfalle')) || [];
 
