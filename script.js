@@ -25,25 +25,29 @@ async function caricaProdotti() {
 
         // Parsing manuale del CSV per trasformarlo in oggetti
         prodotti = righe.slice(1).map(riga => {
-            const col = riga.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            const p = (v) => v ? v.replace(/^"|"$/g, '').trim() : "";
+    const col = riga.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+    const p = (v) => v ? v.replace(/^"|"$/g, '').trim() : "";
+    const isTrue = (v) => v ? v.toLowerCase() === 'true' : false;
 
-            return {
-                id: parseInt(p(col[0])),
-                nome: p(col[1]),
-                prezzoUnita: parseFloat(p(col[2]).replace(',', '.')), 
-                unita: p(col[3]),
-                prezzoChilo: parseFloat(p(col[4]).replace(',', '.')),
-                categoria: p(col[5]) ? p(col[5]).split(';') : [],
-                diet: p(col[6]) ? p(col[6]).split(';') : [],
-                isNew: p(col[7]).toLowerCase() === 'true',
-                provenienza: p(col[8]),
-                desc: p(col[9]),
-                immagine: p(col[10]),
-                data: p(col[11])
-            };
-        });
-
+    return {
+        id: parseInt(p(col[0])),
+        nome: p(col[1]),
+        prezzoUnita: parseFloat(p(col[2]).replace(',', '.')),
+        unita: p(col[3]),
+        prezzoChilo: parseFloat(p(col[4]).replace(',', '.')),
+        categoria: p(col[5]) ? p(col[5]).split(';').map(s => s.trim()) : [],
+        // Proprietà indipendenti
+        isVegan: isTrue(p(col[6])),
+        isVegetarian: isTrue(p(col[7])),
+        isGlutenFree: isTrue(p(col[8])),
+        isLactoseFree: isTrue(p(col[9])), // <--- Aggiunta qui
+        isNew: isTrue(p(col[10])),
+        provenienza: p(col[11]),
+        desc: p(col[12]),
+        immagine: p(col[13]),
+        data: p(col[14])
+    };
+});
         console.log("Dati caricati con successo:", prodotti);
         updateGallery(); 
 
@@ -118,15 +122,21 @@ const searchInput = document.getElementById('searchInput');
 const filterCategory = document.getElementById('filterCategory');
 const sortOrder = document.getElementById('sortOrder');
 
-function getDietDots(dietArray) {
-    if (!dietArray) return '';
-    const colors = {
-        'veg': '#708238', 'vegan': '#a9ba9d', 'gf': '#e6ccb2', 'lf': '#b7b7a4'
-    };
-    const labels = { 'veg': 'Vegetariano', 'vegan': 'Vegano', 'gf': 'Senza Glutine', 'lf': 'Senza Lattosio' };
-    return dietArray.map(d => 
-        `<span title="${labels[d]}" style="display:inline-block; width:8px; height:8px; background:${colors[d]}; border-radius:50%; margin-left:4px;"></span>`
-    ).join('');
+function getDietDots(prodotto) {
+    if (!prodotto) return '';
+
+    const dietConfig = [
+        { key: 'isVegetarian', color: '#708238', label: 'Vegetariano' },
+        { key: 'isVegan', color: '#a9ba9d', label: 'Vegano' },
+        { key: 'isGlutenFree', color: '#e6ccb2', label: 'Senza Glutine' },
+        { key: 'isLactoseFree', color: '#b7b7a4', label: 'Senza Lattosio' }
+    ];
+
+    return dietConfig
+        .filter(config => prodotto[config.key] === true)
+        .map(config => 
+            `<span title="${config.label}" style="display:inline-block; width:8px; height:8px; background:${config.color}; border-radius:50%; margin-left:4px; cursor:help;"></span>`
+        ).join('');
 }
 
 function renderProdotti(lista) {
@@ -168,7 +178,7 @@ function renderProdotti(lista) {
                 <div class="card-body" style="padding: 1.5rem;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                         <span class="tag" style="font-size: 0.65rem; letter-spacing: 1px; color: #888; font-family: 'Montserrat';">${p.provenienza.toUpperCase()}</span>
-                        <div class="diet-dots">${getDietDots(p.diet)}</div>
+                        <div class="diet-dots">${getDietDots(p)}</div>
                     </div>
                     
                     <h3 style="margin: 0.5rem 0; font-family: 'Playfair Display'; font-weight: 700; font-size: 1.3rem; color: #333;">
