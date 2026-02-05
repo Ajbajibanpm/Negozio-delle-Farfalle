@@ -231,9 +231,9 @@ async function caricaRicetteLogica() {
     const text = await response.text();
     const linee = text.split(/\r?\n/).filter(l => l.trim() !== "");
     
-    // Normalizziamo gli header: tutto minuscolo e togliamo l'accento alla 'à'
+    // Normalizziamo gli header (rimuove accenti e spazi)
     const headers = linee[0].split('\t').map(h => 
-        h.trim().toLowerCase().replace('à', 'a')
+        h.trim().toLowerCase().replace('à', 'a').replace(' ', '_')
     );
 
     return linee.slice(1).map(linea => {
@@ -243,20 +243,48 @@ async function caricaRicetteLogica() {
         return obj;
     });
 }
+
 function renderizzaRicette(ricette) {
     const rGrid = document.getElementById('recipeGrid');
     if (!rGrid) return;
     rGrid.innerHTML = '';
+    
     ricette.forEach(r => {
+        // Recupero i dati (assicurati che nel foglio la colonna si chiami 'Tempo')
+        const tempo = r.tempo || "N.D."; 
+        const difficolta = (r.difficolta || "Media").toUpperCase();
+        
         const card = document.createElement('article');
-        card.className = 'recipe-preview-card';
+        card.className = 'card'; // Usiamo la classe card esistente per coerenza
+        card.style.position = 'relative'; 
+        
         card.innerHTML = `
-            <div class="recipe-image-wrapper"><img src="${r.immagine}" style="width:100%; height:200px; object-fit:cover;"></div>
-            <div style="padding:15px;">
-                <span style="font-size:0.7rem; background:#f0f0f0; padding:2px 8px;">${r.dieta}</span>
-                <h3 style="font-family:'Playfair Display';">${r.titolo}</h3>
-                <p style="font-size:0.85rem; color:#666;">${(r.procedimento || "").substring(0,60)}...</p>
-                <a href="dettaglio-ricetta.html?id=${r.id_ricetta}" style="color:#d4a373; font-weight:bold; text-decoration:none; font-size:0.8rem;">SCOPRI DI PIÙ</a>
+            <div class="card-image-container" style="position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 12px; left: 12px; z-index: 10; display: flex; flex-direction: column; gap: 4px;">
+                    <div style="background: rgba(255, 255, 255, 0.95); color: #2D4030; padding: 5px 10px; font-size: 0.6rem; font-weight: 700; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 4px;">
+                        ⏱ ${tempo}
+                    </div>
+                    <div style="background: rgba(45, 64, 48, 0.9); color: white; padding: 5px 10px; font-size: 0.6rem; font-weight: 600; letter-spacing: 1px; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        ${difficolta}
+                    </div>
+                </div>
+                
+                <img src="${r.immagine}" alt="${r.titolo}" style="width:100%; height:250px; object-fit:cover; display: block;">
+            </div>
+            
+            <div class="card-body" style="padding: 1.5rem; background: white;">
+                <span style="font-size: 0.65rem; color: #d4a373; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">${r.dieta}</span>
+                <h3 style="font-family: 'Playfair Display'; font-size: 1.4rem; margin: 0.5rem 0; color: #2D4030;">${r.titolo}</h3>
+                <p style="font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; line-height: 1.4;">
+                    ${(r.procedimento || "").substring(0, 85)}...
+                </p>
+                
+                <div style="border-top: 1px solid #eee; padding-top: 1rem;">
+                    <a href="dettaglio-ricetta.html?id=${r.id_ricetta}" 
+                       style="color: #2D4030; font-weight: 700; text-decoration: none; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 5px;">
+                       Leggi tutto <span style="font-size: 1rem;">›</span>
+                    </a>
+                </div>
             </div>`;
         rGrid.appendChild(card);
     });
