@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricette | Il Negozio delle FARFALLE</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .ricette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            padding: 60px 5%;
+            background-color: #fffaf5;
+        }
+
+        .recipe-preview-card {
+            background: white;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+            position: relative;
+        }
+
+        .recipe-preview-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Gestione Preferiti */
+        .fav-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 10;
+            background: rgba(255,255,255,0.8);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .fav-btn:hover {
+            background: white;
+            color: #e74c3c;
+        }
+
+        .recipe-image-wrapper {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .recipe-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: scale 0.5s ease;
+        }
+
+        .dietary-tags {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag-diet {
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border: 1px solid #d4a373;
+            color: #d4a373;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .recipe-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .recipe-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .recipe-excerpt {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .btn-view-recipe {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #2c3e50;
+            color: white;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            transition: background 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div id="nav-placeholder"></div>
+    </header>
+
+<section class="dispensa-header" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop') center/cover no-repeat; height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;">
+        <h1 class="section-title" style="color: white; margin-bottom: 10px;">Storie in Cucina</h1>
+        <p class="subtitle" style="color: white; opacity: 0.9;">Come trasformare le eccellenze di Borgo Valbelluna in piatti indimenticabili.</p>
+    </section>
+
+<section class="filtri-container">
+    <div class="search-box">
+        <input type="text" id="recipeSearch" placeholder="Cerca una ricetta...">
+    </div>
+    
+    <div class="controls">
+        <div class="multi-select-container" style="position: relative; min-width: 250px;">
+            <input type="text" id="ingSearch" placeholder="Filtra ingredienti dispensa..." style="width: 100%;">
+            <div id="ingList" class="checkbox-list"></div>
+            <div id="selectedCount" style="font-size: 0.65rem; color: #d4a373; margin-top: 2px; font-weight: 700;"></div>
+        </div>
+
+        <select id="filterDifficulty">
+            <option value="all">Tutte le difficoltà</option>
+            <option value="facile">Facile</option>
+            <option value="media">Media</option>
+        </select>
+
+        <select id="filterDiet">
+            <option value="all">Tutte le diete</option>
+            <option value="vegetariano">Vegetariano</option>
+            <option value="vegano">Vegano</option>
+            <option value="senza-glutine">Senza Glutine</option>
+        </select>
+    </div>
+</section>
+
+    <section class="ricette-grid" id="recipeGrid">
+        <div class="loader">Caricamento storie in corso...</div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

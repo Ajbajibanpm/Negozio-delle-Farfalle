@@ -1,95 +1,4 @@
-/**
- * DATABASE PRODOTTI - DISPENSA "IL NEGOZIO DELLE FARFALLE"
- */
-// 1. Dichiara la variabile vuota
-let prodotti = []; 
-
-async function caricaProdotti() {
-    try {
-        console.log("Inizio caricamento...");
-        
-        // URL di esportazione CSV con cache buster per il refresh live
-        const id = "1GiLgBDbPRFQtf4HDmH_PVvQ6azT4EpdGI7mHnn4_z0Q";
-        const gid = "1440058023";
-        const url = `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&gid=${gid}&v=${new Date().getTime()}`;
-        
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-            console.error("Errore nel caricamento dei dati");
-            return;
-        }
-
-        const csvText = await response.text();
-        const righe = csvText.split(/\r?\n/).filter(r => r.trim() !== "");
-
-        // Parsing manuale del CSV per trasformarlo in oggetti
-        prodotti = righe.slice(1).map(riga => {
-    const col = riga.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-    const p = (v) => v ? v.replace(/^"|"$/g, '').trim() : "";
-    const isTrue = (v) => v ? v.toLowerCase() === 'true' : false;
-
-    return {
-        id: parseInt(p(col[0])),
-        nome: p(col[1]),
-        prezzoUnita: parseFloat(p(col[2]).replace(',', '.')),
-        unita: p(col[3]),
-        prezzoChilo: parseFloat(p(col[4]).replace(',', '.')),
-        categoria: p(col[5]) ? p(col[5]).split(';').map(s => s.trim()) : [],
-        // Proprietà indipendenti
-        isVegan: isTrue(p(col[6])),
-        isVegetarian: isTrue(p(col[7])),
-        isGlutenFree: isTrue(p(col[8])),
-        isLactoseFree: isTrue(p(col[9])), // <--- Aggiunta qui
-        isNew: isTrue(p(col[10])),
-        provenienza: p(col[11]),
-        desc: p(col[12]),
-        immagine: p(col[13]),
-        data: p(col[14])
-    };
-});
-        console.log("Dati caricati con successo:", prodotti);
-        updateGallery(); 
-
-    } catch (error) {
-        console.error("Errore critico:", error);
-    }
-}
-
-// 4. Modifica l'avvio nel DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-    inserisciNav();
-    if (document.getElementById('productGrid')) {
-        caricaProdotti(); // Questa funzione caricherà i dati E POI chiamerà updateGallery
-
-        // Listener per i filtri (rimangono invariati)
-        if (searchInput) searchInput.addEventListener('input', updateGallery);
-        if (filterCategory) filterCategory.addEventListener('change', updateGallery);
-        if (sortOrder) sortOrder.addEventListener('change', updateGallery);
-    }
-});
-// --- GESTIONE PREFERITI ---
-let preferiti = JSON.parse(localStorage.getItem('preferiti_farfalle')) || [];
-
-function togglePreferito(id) {
-    if (preferiti.includes(id)) {
-        preferiti = preferiti.filter(favId => favId !== id);
-    } else {
-        preferiti.push(id);
-    }
-    localStorage.setItem('preferiti_farfalle', JSON.stringify(preferiti));
-    
-    // Invece di updateGallery(), aggiorniamo solo l'aspetto del bottone
-    // per non far saltare la card in cima immediatamente
-    const btn = document.querySelector(`button[onclick="togglePreferito(${id})"] span`);
-    if (btn) {
-        const isFav = preferiti.includes(id);
-        btn.innerHTML = isFav ? '★' : '☆';
-        btn.style.color = isFav ? '#d4a373' : '#ccc';
-    }
-}
-
-// --- LOGICA DI NAVIGAZIONE ---
+//#region NAV E FOOTER (INVARIATI)
 function inserisciNav() {
     const navContent = `
     <nav class="nav-horizontal">
@@ -101,22 +10,114 @@ function inserisciNav() {
             <li><a href="index.html">HOME</a></li>
             <li><a href="chi-siamo.html">CHI SIAMO</a></li>
             <li><a href="dispensa.html">DISPENSA</a></li>
-            <li><a href="#ricette">RICETTE</a></li>
+            <li><a href="ricette.html">RICETTE</a></li>
             <li><a href="#eventi">EVENTI</a></li>
         </ul>
     </nav>`;
+    const p = document.getElementById('nav-placeholder');
+    if (p) p.innerHTML = navContent;
+}
 
-    const placeholder = document.getElementById('nav-placeholder');
-    if (placeholder) {
-        placeholder.innerHTML = navContent;
-        const currentPath = window.location.pathname.split("/").pop() || "index.html";
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            if (link.getAttribute('href') === currentPath) link.classList.add('active');
+function inserisciFooter() {
+    const footerContent = `<footer><div class="footer-content"><div class="footer-logo"><span class="footer-brand">FARFALLE</span><p>Bottega Alimentare • Mel</p></div></div></footer>`;
+    const p = document.getElementById('footer-placeholder');
+    if (p) p.innerHTML = footerContent;
+}
+//#endregion
+
+//#region AVVIO UNIFICATO
+let prodotti = []; 
+let ricetteGlobal = []; 
+
+document.addEventListener('DOMContentLoaded', async () => {
+    inserisciNav();
+    inserisciFooter();
+
+    // 1. Carichiamo SEMPRE la dispensa perché serve a entrambi (filtri ricette e grid prodotti)
+    await caricaProdotti(); 
+
+    // 2. Se siamo in DISPENSA
+    if (document.getElementById('productGrid')) {
+        // I prodotti sono già stati caricati sopra, aggiorniamo solo la gallery
+        updateGallery(); 
+        
+        const searchInput = document.getElementById('searchInput');
+        const filterCategory = document.getElementById('filterCategory');
+        const sortOrder = document.getElementById('sortOrder');
+        
+        if (searchInput) searchInput.addEventListener('input', updateGallery);
+        if (filterCategory) filterCategory.addEventListener('change', updateGallery);
+        if (sortOrder) sortOrder.addEventListener('change', updateGallery);
+    }
+
+    // 3. Se siamo in RICETTE
+    if (document.getElementById('recipeGrid')) {
+        ricetteGlobal = await caricaRicetteLogica();
+        
+        // FONDAMENTALE: Popoliamo il select con i dati di 'prodotti' appena scaricati
+        popolaFiltroIngredienti(); 
+        
+        renderizzaRicette(ricetteGlobal);
+        configuraFiltriRicette();
+    }
+});
+//#endregion
+//#region LOGICA DISPENSA (IL TUO CODICE ORIGINALE)
+async function caricaProdotti() {
+    try {
+        const id = "1GiLgBDbPRFQtf4HDmH_PVvQ6azT4EpdGI7mHnn4_z0Q";
+        const gid = "1440058023";
+        const url = `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&gid=${gid}&v=${new Date().getTime()}`;
+        
+        const response = await fetch(url);
+        const csvText = await response.text();
+        const righe = csvText.split(/\r?\n/).filter(r => r.trim() !== "");
+
+        prodotti = righe.slice(1).map(riga => {
+            const col = riga.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            const p = (v) => v ? v.replace(/^"|"$/g, '').trim() : "";
+            const isTrue = (v) => v ? v.toLowerCase() === 'true' : false;
+
+            return {
+                id: parseInt(p(col[0])),
+                nome: p(col[1]),
+                prezzoUnita: parseFloat(p(col[2]).replace(',', '.')),
+                unita: p(col[3]),
+                prezzoChilo: parseFloat(p(col[4]).replace(',', '.')),
+                categoria: p(col[5]) ? p(col[5]).split(';').map(s => s.trim()) : [],
+                isVegan: isTrue(p(col[6])),
+                isVegetarian: isTrue(p(col[7])),
+                isGlutenFree: isTrue(p(col[8])),
+                isLactoseFree: isTrue(p(col[9])),
+                isNew: isTrue(p(col[10])),
+                provenienza: p(col[11]),
+                desc: p(col[12]),
+                immagine: p(col[13]),
+                data: p(col[14]),
+                isAvailable: isTrue(p(col[15]))
+            };
         });
+        updateGallery();
+    } catch (error) { console.error("Errore:", error); }
+}
+
+let preferiti = JSON.parse(localStorage.getItem('preferiti_farfalle')) || [];
+
+function togglePreferito(id) {
+    if (preferiti.includes(id)) {
+        preferiti = preferiti.filter(favId => favId !== id);
+    } else {
+        preferiti.push(id);
+    }
+    localStorage.setItem('preferiti_farfalle', JSON.stringify(preferiti));
+    const btn = document.querySelector(`button[onclick="togglePreferito(${id})"] span`);
+    if (btn) {
+        const isFav = preferiti.includes(id);
+        btn.innerHTML = isFav ? '★' : '☆';
+        btn.style.color = isFav ? '#be9825' : '#ccc';
     }
 }
 
-// --- LOGICA PRODOTTI ---
 const grid = document.getElementById('productGrid');
 const searchInput = document.getElementById('searchInput');
 const filterCategory = document.getElementById('filterCategory');
@@ -124,72 +125,59 @@ const sortOrder = document.getElementById('sortOrder');
 
 function getDietDots(prodotto) {
     if (!prodotto) return '';
-
     const dietConfig = [
         { key: 'isVegetarian', color: '#708238', label: 'Vegetariano' },
         { key: 'isVegan', color: '#a9ba9d', label: 'Vegano' },
         { key: 'isGlutenFree', color: '#e6ccb2', label: 'Senza Glutine' },
         { key: 'isLactoseFree', color: '#b7b7a4', label: 'Senza Lattosio' }
     ];
-
     return dietConfig
         .filter(config => prodotto[config.key] === true)
-        .map(config => 
-            `<span title="${config.label}" style="display:inline-block; width:8px; height:8px; background:${config.color}; border-radius:50%; margin-left:4px; cursor:help;"></span>`
-        ).join('');
+        .map(config => `<span title="${config.label}" style="display:inline-block; width:8px; height:8px; background:${config.color}; border-radius:50%; margin-left:4px;"></span>`)
+        .join('');
 }
 
 function renderProdotti(lista) {
     if (!grid) return;
     grid.innerHTML = '';
-    
-    if (lista.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 3rem;">Nessun prodotto trovato.</p>';
-        return;
-    }
-
     lista.forEach(p => {
         const isFav = preferiti.includes(p.id);
+        
+        // Determina lo stile per i prodotti esauriti
+        const opacityStyle = p.isAvailable ? '1' : '0.6';
+        const grayscaleStyle = p.isAvailable ? 'none' : 'grayscale(100%)';
+
         const card = `
-            <article class="card" style="position: relative; margin-bottom: 2rem;">
-                <div class="card-image-container" style="position: relative; overflow: hidden; border-radius: 4px;">
-                    <img src="${p.immagine}" alt="${p.nome}" style="width: 100%; height: 250px; object-fit: cover; display: block;">
+            <article class="card" style="position: relative; margin-bottom: 2rem; opacity: ${opacityStyle};">
+                <div class="card-image-container" style="position: relative; overflow: hidden;">
+                    <img src="${p.immagine}" alt="${p.nome}" style="width: 100%; height: 250px; object-fit: cover; filter: ${grayscaleStyle};">
                     
-<button class="fav-btn" onclick="togglePreferito(${p.id})" 
-    style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9); border: none; width: 36px; height: 36px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 10;">
-    <span style="color: ${isFav ? '#be9825' : '#ccc'}; 
-                 font-size: 1.55rem; 
-                 display: flex; 
-                 align-items: center; 
-                 justify-content: center; 
-                 line-height: 0; 
-                 margin-top: 2px;">
-        ${isFav ? '★' : '☆'}
-    </span>
-</button>
+                    <button class="fav-btn" onclick="togglePreferito(${p.id})" style="position: absolute; top: 15px; right: 15px; background: white; border-radius: 50%; width: 36px; height: 36px; border:none; cursor:pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 10;">
+                        <span style="color: ${isFav ? '#be9825' : '#ccc'}; font-size: 1.2rem;">★</span>
+                    </button>
+
+                    ${!p.isAvailable ? `
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 10px 20px; font-size: 0.8rem; letter-spacing: 2px; z-index: 5;">ESAURITO</div>
+                    ` : ''}
 
                     ${p.isNew ? `
-                        <div style="position: absolute; bottom: 0; left: 0; background: rgba(212, 163, 115, 0.9); color: white; padding: 6px 15px; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; font-family: 'Montserrat';">
-                            Nuovo Arrivo
-                        </div>
+                        <div style="position: absolute; bottom: 0; left: 0; background: #d4a373; color: white; padding: 6px 15px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px;">NUOVO ARRIVO</div>
                     ` : ''}
                 </div>
 
-                <div class="card-body" style="padding: 1.5rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <span class="tag" style="font-size: 0.65rem; letter-spacing: 1px; color: #888; font-family: 'Montserrat';">${p.provenienza.toUpperCase()}</span>
+                <div class="card-body" style="padding: 1.5rem; background: white;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 1px;">${p.provenienza}</span>
                         <div class="diet-dots">${getDietDots(p)}</div>
                     </div>
                     
-                    <h3 style="margin: 0.5rem 0; font-family: 'Playfair Display'; font-weight: 700; font-size: 1.3rem; color: #333;">
-                        ${p.nome}
-                    </h3>
+                    <h3 style="font-family: 'Playfair Display'; font-size: 1.4rem; margin: 0.5rem 0; color: #2D4030;">${p.nome}</h3>
                     
-                    <p style="font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 1.2rem; font-family: 'Montserrat';">${p.desc}</p>
+                    <p style="font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; min-height: 2.5em;">${p.desc}</p>
                     
-                    <div class="prezzo-container" style="border-top: 1px solid #f0f0f0; padding-top: 1rem; display: flex; align-items: baseline; gap: 8px;">
-                        <span style="font-family: 'Playfair Display'; font-size: 1.3rem; font-weight: 700; color: #222;">${p.prezzoUnita.toFixed(2)} €</span>
-                        <small style="font-size: 0.75rem; color: #999; font-family: 'Montserrat'; text-transform: lowercase;">/ ${p.unita}</small>
+                    <div style="margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1rem; display: flex; align-items: baseline; gap: 5px;">
+                        <span style="font-size: 1.3rem; font-weight: 700; color: #333;">${p.prezzoUnita.toFixed(2)} €</span>
+                        <small style="color: #888; font-size: 0.75rem;">/ ${p.unita}</small>
                     </div>
                 </div>
             </article>`;
@@ -205,47 +193,186 @@ function updateGallery() {
 
     let filtrati = prodotti.filter(p => {
         const matchesSearch = p.nome.toLowerCase().includes(searchTerm) || p.desc.toLowerCase().includes(searchTerm);
-        let matchesCat = (selectedCat === 'fav') ? preferiti.includes(p.id) : (selectedCat === 'all' || p.categoria.includes(selectedCat));
+        let matchesCat = true;
+        
+        if (selectedCat === 'fav') matchesCat = preferiti.includes(p.id);
+        else if (selectedCat === 'available') matchesCat = p.isAvailable;
+        else if (selectedCat !== 'all') matchesCat = p.categoria.includes(selectedCat);
+        
         return matchesSearch && matchesCat;
     });
 
-    // ORDINAMENTO
     filtrati.sort((a, b) => {
-        // Se l'ordinamento è impostato su "novità"
-        if (selectedSort === 'new') {
-            // Se 'a' è nuovo e 'b' no, 'a' va sopra (-1)
-            if (a.isNew && !b.isNew) return -1;
-            // Se 'b' è nuovo e 'a' no, 'b' va sopra (1)
-            if (!a.isNew && b.isNew) return 1;
-            // Se entrambi sono nuovi o entrambi no, mantieni ordine originale
-            return 0;
-        } 
-        
+        const isFavA = preferiti.includes(a.id);
+        const isFavB = preferiti.includes(b.id);
+
+        // 1. DISPONIBILITÀ (Sempre sopra i disponibili)
+        if (a.isAvailable !== b.isAvailable) return b.isAvailable - a.isAvailable;
+
+        // 2. PREFERITI (Sempre sopra i preferiti del loro gruppo)
+        if (isFavA !== isFavB) return isFavB - isFavA;
+
+        // 3. ORDINAMENTO SCELTO
         if (selectedSort === 'alpha') return a.nome.localeCompare(b.nome);
         if (selectedSort === 'price-asc') return a.prezzoUnita - b.prezzoUnita;
-        return 0;
+        return (b.isNew - a.isNew);
     });
 
-    // SEPARAZIONE FISSA: Preferiti in alto, Altri sotto
-    // Questa struttura garantisce che i preferiti siano in cima, 
-    // e all'interno del gruppo "Altri", le novità (isNew: true) siano le prime visibili.
-    const listaPreferiti = filtrati.filter(p => preferiti.includes(p.id));
-    const listaAltri = filtrati.filter(p => !preferiti.includes(p.id));
+    renderProdotti(filtrati);
+}
+//#endregion
 
-    renderProdotti([...listaPreferiti, ...listaAltri]);
+
+
+//#region LOGICA RICETTE (ADATTATA)
+async function caricaRicetteLogica() {
+    const url = `https://docs.google.com/spreadsheets/d/13A5Lh4LTC1R1vDWmlXRc2kSMCs6-nfwwX6d9sNxeOPk/export?format=tsv&gid=1358989914`;
+    const response = await fetch(url);
+    const text = await response.text();
+    const linee = text.split(/\r?\n/).filter(l => l.trim() !== "");
+    
+    // Normalizziamo gli header: tutto minuscolo e togliamo l'accento alla 'à'
+    const headers = linee[0].split('\t').map(h => 
+        h.trim().toLowerCase().replace('à', 'a')
+    );
+
+    return linee.slice(1).map(linea => {
+        const valori = linea.split('\t');
+        let obj = {};
+        headers.forEach((h, i) => obj[h] = valori[i] ? valori[i].trim() : "");
+        return obj;
+    });
+}
+function renderizzaRicette(ricette) {
+    const rGrid = document.getElementById('recipeGrid');
+    if (!rGrid) return;
+    rGrid.innerHTML = '';
+    ricette.forEach(r => {
+        const card = document.createElement('article');
+        card.className = 'recipe-preview-card';
+        card.innerHTML = `
+            <div class="recipe-image-wrapper"><img src="${r.immagine}" style="width:100%; height:200px; object-fit:cover;"></div>
+            <div style="padding:15px;">
+                <span style="font-size:0.7rem; background:#f0f0f0; padding:2px 8px;">${r.dieta}</span>
+                <h3 style="font-family:'Playfair Display';">${r.titolo}</h3>
+                <p style="font-size:0.85rem; color:#666;">${(r.procedimento || "").substring(0,60)}...</p>
+                <a href="dettaglio-ricetta.html?id=${r.id_ricetta}" style="color:#d4a373; font-weight:bold; text-decoration:none; font-size:0.8rem;">SCOPRI DI PIÙ</a>
+            </div>`;
+        rGrid.appendChild(card);
+    });
 }
 
-// --- AVVIO ---
-// --- AVVIO ---
-document.addEventListener('DOMContentLoaded', () => {
-    inserisciNav();
-    if (grid) {
-        // CORREZIONE: Non usare renderProdotti(prodotti), 
-        // ma chiama updateGallery() per attivare subito l'ordine Novità + Preferiti
-        updateGallery(); 
+let ingredientiSelezionati = []; 
 
-        if (searchInput) searchInput.addEventListener('input', updateGallery);
-        if (filterCategory) filterCategory.addEventListener('change', updateGallery);
-        if (sortOrder) sortOrder.addEventListener('change', updateGallery);
-    }
-});
+function popolaFiltroIngredienti() {
+    const listCont = document.getElementById('ingList');
+    const inputSearch = document.getElementById('ingSearch');
+    // Verifica che gli elementi esistano e che 'prodotti' sia popolato
+    if (!listCont || !inputSearch || !prodotti || prodotti.length === 0) return;
+
+    const renderizzaLista = (term = "") => {
+        // Ordina: prima i selezionati, poi ordine alfabetico
+        const prodottiOrdinati = [...prodotti].sort((a, b) => {
+            const aSel = ingredientiSelezionati.includes(a.id.toString());
+            const bSel = ingredientiSelezionati.includes(b.id.toString());
+            if (aSel && !bSel) return -1;
+            if (!aSel && bSel) return 1;
+            return (a.nome || "").localeCompare(b.nome || "");
+        });
+
+        const html = prodottiOrdinati
+            .filter(p => (p.nome || "").toLowerCase().includes(term.toLowerCase()))
+            .map(p => `
+                <label style="display: flex; align-items: center; gap: 8px; padding: 8px; cursor: pointer; border-bottom: 1px solid #f0f0f0;">
+                    <input type="checkbox" class="ing-checkbox" value="${p.id}" 
+                           ${ingredientiSelezionati.includes(p.id.toString()) ? 'checked' : ''}> 
+                    <span style="font-size: 0.85rem; ${ingredientiSelezionati.includes(p.id.toString()) ? 'font-weight:bold; color:#d4a373;' : ''}">${p.nome}</span>
+                </label>
+            `).join('');
+        
+        listCont.innerHTML = html;
+    };
+
+    inputSearch.addEventListener('input', (e) => renderizzaLista(e.target.value));
+    
+    // Mostra e renderizza al focus
+    inputSearch.addEventListener('focus', () => {
+        listCont.style.display = 'block';
+        renderizzaLista(inputSearch.value);
+    });
+
+    listCont.addEventListener('change', (e) => {
+        if (e.target.classList.contains('ing-checkbox')) {
+            const val = e.target.value.toString();
+            
+            if (e.target.checked) {
+                if (!ingredientiSelezionati.includes(val)) ingredientiSelezionati.push(val);
+            } else {
+                ingredientiSelezionati = ingredientiSelezionati.filter(i => i !== val);
+            }
+            
+            const countEl = document.getElementById('selectedCount');
+            if (countEl) countEl.textContent = ingredientiSelezionati.length > 0 ? `${ingredientiSelezionati.length} selezionati` : "";
+            
+            setTimeout(() => {
+                listCont.style.display = 'none';
+                inputSearch.value = "";
+            }, 250);
+
+            eseguiFiltroRicette();
+        }
+    });
+
+    renderizzaLista();
+}
+
+function eseguiFiltroRicette() {
+    const s = document.getElementById('recipeSearch');
+    const fDiff = document.getElementById('filterDifficulty');
+    const fDiet = document.getElementById('filterDiet');
+
+    const query = s ? s.value.toLowerCase() : "";
+    const diffScelta = fDiff ? fDiff.value.toLowerCase() : "all";
+    const dietaScelta = fDiet ? fDiet.value.toLowerCase() : "all";
+
+    const filtrate = ricetteGlobal.filter(r => {
+        const rTitolo = (r.titolo || "").toLowerCase();
+        
+        // Usiamo la chiave 'difficolta' (normalizzata sopra)
+        const rDiff = (r.difficolta || "").toLowerCase();
+        const rDiet = (r.dieta || "").toLowerCase();
+        
+        // Raccolta ID ingredienti (come prima)
+        const idsInRicetta = [];
+        for (let i = 1; i <= 4; i++) {
+            const val = r[`ingrediente_${i}`];
+            if (val) idsInRicetta.push(val.toString().trim());
+        }
+
+        const matchNome = rTitolo.includes(query);
+        
+        // Filtro difficoltà: deve corrispondere esattamente (es. "facile" === "facile")
+        const matchDiff = (diffScelta === 'all' || rDiff === diffScelta);
+        
+        const matchDieta = (dietaScelta === 'all' || rDiet.includes(dietaScelta));
+        
+        const matchIng = ingredientiSelezionati.length === 0 || 
+                         ingredientiSelezionati.every(idSel => idsInRicetta.includes(idSel));
+
+        return matchNome && matchDiff && matchDieta && matchIng;
+    });
+
+    renderizzaRicette(filtrate);
+}
+
+// Listener per gli altri filtri
+function configuraFiltriRicette() {
+    const s = document.getElementById('recipeSearch');
+    const fDiff = document.getElementById('filterDifficulty');
+    const fDiet = document.getElementById('filterDiet');
+    
+    if (s) s.addEventListener('input', eseguiFiltroRicette);
+    if (fDiff) fDiff.addEventListener('change', eseguiFiltroRicette);
+    if (fDiet) fDiet.addEventListener('change', eseguiFiltroRicette);
+}
+//#endregion

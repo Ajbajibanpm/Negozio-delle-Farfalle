@@ -83,7 +83,7 @@ nav ul li a:hover {
     text-align: center;
 }
 
-.hero-content h2 {
+.hero-content h1 {
     font-family: 'Playfair Display', serif;
     font-size: 3.5rem;
 }
@@ -455,3 +455,23 @@ blockquote {
 .fav-btn:hover span {
     color: #d4a373 !important;
 }
+
+
+.checkbox-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 10px;
+    display: none; /* Compare quando clicchi l'input */
+    background: white;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+}
+.checkbox-list label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+

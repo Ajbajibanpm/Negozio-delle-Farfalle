@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ajbajibanpm.github.io/Negozio-delle-Farfalle/sitemap.xml
