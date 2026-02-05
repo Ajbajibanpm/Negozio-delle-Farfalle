@@ -11,7 +11,7 @@ function inserisciNav() {
             <li><a href="chi-siamo.html">CHI SIAMO</a></li>
             <li><a href="dispensa.html">DISPENSA</a></li>
             <li><a href="ricette.html">RICETTE</a></li>
-            <li><a href="#eventi">EVENTI</a></li>
+            <li><a href="eventi.html">EVENTI</a></li>
         </ul>
     </nav>`;
     const p = document.getElementById('nav-placeholder');
