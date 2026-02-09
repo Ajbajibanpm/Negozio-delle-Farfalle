@@ -63,7 +63,7 @@ function inserisciFooter() {
         </div>
 
         <div class="footer-bottom">
-            &copy; 2026 Azienda Agricola Le Coccinelle di Scarton Deborah. Tutti i diritti riservati.
+
         </div>
     </footer>`;
     const p = document.getElementById('footer-placeholder');
@@ -451,4 +451,5 @@ function configuraFiltriRicette() {
 }
 
 //#endregion
+
 
