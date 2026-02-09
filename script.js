@@ -3,7 +3,7 @@ function inserisciNav() {
     const navContent = `
     <nav class="nav-horizontal">
         <ul class="nav-links">
-            <img src="Coccinelle_logo_rettangolare.png" alt="Logo Le Coccinelle" class="footer-logo-img">
+            <img src="fARFAlle_logo_rettangolare.png" alt="Logo Le Coccinelle" class="footer-logo-img">
         </ul>
         <ul class="nav-links">
             <li><a href="index.html">HOME</a></li>
@@ -30,7 +30,7 @@ function inserisciFooter() {
     const footerContent = `<footer>
         <div class="footer-container">
             <div class="footer-section">
-                <img src="Farfalle_logo_rettangolare_verde.png" alt="Logo Le Coccinelle" class="footer-logo-img">
+                <img src="Farfalle_logo_rettangolare_verde.png" alt="Logo Le Farfalle" class="footer-logo-img">
                 <span class="footer-brand">LE FARFALLE</span>
                 <p class="footer-tagline">Azienda Agricola • Borgo Valbelluna</p>
                 <p style="margin-top: 15px; font-style: italic; color: #777;">
@@ -41,8 +41,8 @@ function inserisciFooter() {
             <div class="footer-section">
                 <h4>Contatti</h4>
                 <p>32026 Borgo Valbelluna (BL)</p>
-                <a href="tel:+39********98" class="contact-link"><strong>T.</strong> +39 320 355 2698</a>
-                <a href="mailto:******@gmail.com" class="contact-link"><strong>E.</strong> scartondeborah@gmail.com</a>
+                <a href="tel:+39********98" class="contact-link"><strong>T.</strong> +39 ********98</a>
+                <a href="mailto:******@gmail.com" class="contact-link"><strong>E.</strong> ******@gmail.com</a>
             </div>
 
             <div class="footer-section">
@@ -451,3 +451,4 @@ function configuraFiltriRicette() {
 }
 
 //#endregion
+
