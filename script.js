@@ -2,10 +2,9 @@
 function inserisciNav() {
     const navContent = `
     <nav class="nav-horizontal">
-        <div class="brand-inline">
-            <span class="prefix">il negozio delle</span>
-            <span class="main-name"><br>FARFALLE</span>
-        </div>
+        <ul class="nav-links">
+            <img src="Coccinelle_logo_rettangolare.png" alt="Logo Le Coccinelle" class="footer-logo-img">
+        </ul>
         <ul class="nav-links">
             <li><a href="index.html">HOME</a></li>
             <li><a href="chi-siamo.html">CHI SIAMO</a></li>
@@ -13,13 +12,60 @@ function inserisciNav() {
             <li><a href="ricette.html">RICETTE</a></li>
             <li><a href="eventi.html">EVENTI</a></li>
         </ul>
-    </nav>`;
+        <ul class="nav-links">
+            <a href="https://wa.me/393203552698?text=Buongiorno,%20vorrei%20effettuare%20un%20ordine%20di%20prodotti%20alimentari%20bio%20con%20ritiro%20presso%20la%20vostra%20sede."
+            style="display: inline-flex; align-items: center; padding: 12px 25px; background-color: #79c81f; color: #ffffff; text-decoration: none; border-radius: 4px; font-family: Arial, sans-serif; font-size: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 10px;">
+                    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.06 3.973L0 16l4.104-1.076a7.858 7.858 0 0 0 3.888 1.035h.001c4.469 0 8.043-3.633 8.047-8.096A7.95 7.95 0 0 0 13.601 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                </svg>
+            Contattaci
+            </a>
+            </ul>
+        </nav>`;
     const p = document.getElementById('nav-placeholder');
     if (p) p.innerHTML = navContent;
 }
 
 function inserisciFooter() {
-    const footerContent = `<footer><div class="footer-content"><div class="footer-logo"><span class="footer-brand">FARFALLE</span><p>Bottega Alimentare • Mel</p></div></div></footer>`;
+    const footerContent = `<footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="Coccinelle_logo_rettangolare_verde.png" alt="Logo Le Coccinelle" class="footer-logo-img">
+                <span class="footer-brand">LE COCCINELLE</span>
+                <p class="footer-tagline">Azienda Agricola • Borgo Valbelluna</p>
+                <p style="margin-top: 15px; font-style: italic; color: #777;">
+                    Prodotti genuini coltivati con passione nel cuore delle Dolomiti Bellunesi.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contatti</h4>
+                <p>Via Corte di Mel, 36<br>32026 Borgo Valbelluna (BL)</p>
+                <a href="tel:+393203552698" class="contact-link"><strong>T.</strong> +39 320 355 2698</a>
+                <a href="mailto:scartondeborah@gmail.com" class="contact-link"><strong>E.</strong> scartondeborah@gmail.com</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Orari Negozio</h4>
+                <div class="hours-row">
+                    <span class="day">Giovedì</span>
+                    <span class="time">15:00 – 18:30</span>
+                </div>
+                <div class="hours-row">
+                    <span class="day">Venerdì</span>
+                    <span class="time">08:30 – 12:30 | 15:00 – 18:30</span>
+                </div>
+                <div class="hours-row" style="border: none;">
+                    <span class="day">Sabato</span>
+                    <span class="time">08:30 – 12:30</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; 2026 Azienda Agricola Le Coccinelle di Scarton Deborah. Tutti i diritti riservati.
+        </div>
+    </footer>`;
     const p = document.getElementById('footer-placeholder');
     if (p) p.innerHTML = footerContent;
 }
